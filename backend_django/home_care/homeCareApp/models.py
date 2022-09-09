@@ -1,46 +1,79 @@
 from django.db import models
 
 class Signos_vitales(models.Model):
-    None
+    ID_SIGNO_VITAL = models.AutoField(primary_key=True)
+    Tipo_Signo = models.CharField(max_length=60)
 
 class Rol(models.Model):
-    None
+    ID_ROL = models.AutoField(primary_key=True)
+    Rol = models.CharField(max_length=60)
 
 class Usuarios(models.Model):
-    None
+    ID_LOGIN= models.AutoField(primary_key=True)
+    ID_ROL  = models.ForeignKey(Rol, on_delete=models.CASCADE)
+    Contraseña = models.CharField(max_length=60)
 
 class Persona(models.Model):
-    None
+    ID_PERSONA = models.AutoField(primary_key=True)
+    Identificacion = models.ForeignKey(Usuarios, on_delete=models.CASCADE)
+    Nombre = models.CharField(max_length=60)
+    Apellido = models.CharField(max_length=60)
+    Telefono = models.CharField(max_length=60)
+    Genero = models.CharField(max_length=60)
+    Email = models.CharField(max_length=60)
 
 class Auxiliar(models.Model):
-    None
+    ID_AUXILIAR = models.AutoField(primary_key=True)
+    ID_PERSONA = models.ForeignKey(Persona, on_delete=models.CASCADE)
 
 class Enfermero(models.Model):
-    None
+    ID_ENFERMERO = models.AutoField(primary_key=True)
+    ID_PERSONA = models.ForeignKey(Persona, on_delete=models.CASCADE)
 
 class Familiar(models.Model):
-    None
+    ID_FAMILIAR = models.AutoField(primary_key=True)
+    ID_PERSONA = models.ForeignKey(Persona, on_delete=models.CASCADE)
+    parentesco = models.CharField(max_length=60)
 
 class Especialidad (models.Model):
-    None
+    ID_ESPECIALIDAD = models.AutoField(primary_key=True)
+    especialidad = models.CharField(max_length=60)
 
 class Medico(models.Model):
-    None
+    ID_MEDICO = models.AutoField(primary_key=True)
+    ID_PERSONA = models.ForeignKey(Persona, on_delete=models.CASCADE)
+    ID_ESPECIALIDAD = models.ForeignKey(Especialidad, on_delete=models.CASCADE)
+    Registro = models.CharField(max_length=60)
 
 class Paciente(models.Model):
-    None
+    ID_PACIENTE = models.AutoField(primary_key=True)
+    Persona_ID_PERSONA = models.ForeignKey(Persona, on_delete=models.CASCADE)
+    Medico_ID_MEDICO = models.ForeignKey(Medico, on_delete=models.CASCADE)
+    Familiar_ID_FAMILIAR = models.ForeignKey(Familiar, on_delete=models.CASCADE)
+    Direccion = models.CharField(max_length=255)
+    Ciudad = models.CharField(max_length=60)
+    Latitud = models.DecimalField(max_digits= 11, decimal_places= 8)
+    Longitud = models.DecimalField(max_digits= 11, decimal_places= 8)
+    Fecha_Nacimiento = models.DateField()
 
 class Registro_SV(models.Model):
-    None
+    ID_REGISTRO_SV = models.AutoField(primary_key=True)
+    SV_ID_SIGNO_VITAL = models.ForeignKey(Persona, on_delete=models.CASCADE)
+    Paciente_ID_PACIENTE = models.ForeignKey(Medico, on_delete=models.CASCADE)
+    Medida = models.DecimalField(max_digits= 6, decimal_places= 3)
+    Fecha_Hora = models.DateTimeField()
+    Fecha_Nacimiento = models.CharField(max_length=128)
 
 class T_Diagnostico(models.Model):
-    None
+    ID_DIAGNOSTICO = models.BigAutoField(primary_key=True)
+    ID_PACIENTE = models.ForeignKey(Paciente, on_delete=models.CASCADE)
+    ID_MEDICO = models.ForeignKey(Medico, on_delete=models.CASCADE)
+    Diagnostico = models.TextField()
+    fecha_hora = models.DataTimeField()
 
 class T_Sugerencias(models.Model):
-    None
-
-
-
-
-
-
+    ID_SUGERENCIAS = models.AutoField(primary_key=True)
+    ID_MEDICO = models.ForeignKey(Medico, on_delete=models.CASCADE)
+    ID_DIAGNOSTICO = models.ForeignKey(T_Diagnostico, on_delete=models.CASCADE)
+    fecha_hora = models.DataTimeField()
+    descripcion = models.TextField()
