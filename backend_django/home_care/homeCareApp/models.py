@@ -69,11 +69,11 @@ class T_Diagnostico(models.Model):
     ID_PACIENTE = models.ForeignKey(Paciente, on_delete=models.CASCADE)
     ID_MEDICO = models.ForeignKey(Medico, on_delete=models.CASCADE)
     Diagnostico = models.TextField()
-    fecha_hora = models.DataTimeField()
+    fecha_hora = models.DateTimeField()
 
 class T_Sugerencias(models.Model):
     ID_SUGERENCIAS = models.AutoField(primary_key=True)
     ID_MEDICO = models.ForeignKey(Medico, on_delete=models.CASCADE)
     ID_DIAGNOSTICO = models.ForeignKey(T_Diagnostico, on_delete=models.CASCADE)
-    fecha_hora = models.DataTimeField()
+    fecha_hora = models.DateTimeField()
     descripcion = models.TextField()

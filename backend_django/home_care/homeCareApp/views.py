@@ -11,7 +11,7 @@ def home(request):
 def nuevoUsuario(request):
     if request.method == 'POST':
         try:
-
+            
             return HttpResponse("Paciente agregado")
         except:
             return HttpResponseBadRequest("Error en los datos recibidos")
@@ -31,6 +31,7 @@ def nuevoPersona(request):
 def nuevoPaciente(request):
     if request.method == 'POST':
         try:
+
 
             return HttpResponse("Paciente agregado")
         except:
