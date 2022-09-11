@@ -1,0 +1,64 @@
+#este archivo sirve para copiar y pegar en postman para realizar pruebas de 
+#ingreso de datos y consulta de datos de la BD
+
+# agregar signo vital
+{
+    "signo_vital" : "Oximetria"
+}
+
+#consultar signo vital
+http://127.0.0.1:8000/getSignoVital/<numEntero>
+
+
+# agregar Rol
+{
+    "Rol" : "Médico"
+}
+
+#consultar Rol
+http://127.0.0.1:8000/getRol/<numEntero>
+
+
+# agregar Usuario
+{
+    "ID_LOGIN": 123,
+    "ID_ROL" : 1,
+    "Password" : "hola123456"
+}
+
+#consultar Usuario
+http://127.0.0.1:8000/getUsuario/<numEntero>
+
+
+
+#agregar Persona
+{
+    "ID_ROL" : 6,
+    "Password" : "hola123456",
+    "Identificacion" : -1,
+    "Nombre" : "Administrador",
+    "Apellido" : "Administrador",
+    "Telefono" : "320000",
+    "Genero" : "No_binario",
+    "Email" : "Administrador@gmail.com"
+}
+
+#consultar Persona
+http://127.0.0.1:8000/getRol/<numEntero>
+
+
+#agregar Paciente
+{
+    "Identificacion" : 258,
+    "Medico_ID_MEDICO" : null,
+    "Familiar_ID_FAMILIAR" : null,
+    "Direccion" : "kr 60 x cl 60",
+    "Ciudad" : "Bogota",
+    "Latitud" : 4.576,
+    "Longitud" : -74.12,
+    "Fecha_Nacimiento" : "01-03-1991"
+}
+
+#consultar pacientes
+http://127.0.0.1:8000/getPaciente/<numEntero>
+http://127.0.0.1:8000/getAllPatients

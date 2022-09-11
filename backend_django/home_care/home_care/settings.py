@@ -81,6 +81,7 @@ WSGI_APPLICATION = 'home_care.wsgi.application'
 #     }
 # }
 
+#credenciales de la BD remota
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',

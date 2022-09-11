@@ -9,9 +9,9 @@ class Rol(models.Model):
     Rol = models.CharField(max_length=60)
 
 class Usuarios(models.Model):
-    ID_LOGIN= models.AutoField(primary_key=True)
+    ID_LOGIN= models.BigIntegerField(primary_key=True) #corregir este campo ya que no es autoincremental y si es varchar
     ID_ROL  = models.ForeignKey(Rol, on_delete=models.CASCADE)
-    Contraseña = models.CharField(max_length=60)
+    Password = models.CharField(max_length=60) 
 
 class Persona(models.Model):
     ID_PERSONA = models.AutoField(primary_key=True)
@@ -19,7 +19,7 @@ class Persona(models.Model):
     Nombre = models.CharField(max_length=60)
     Apellido = models.CharField(max_length=60)
     Telefono = models.CharField(max_length=60)
-    Genero = models.CharField(max_length=60)
+    Genero = models.CharField(max_length=60)#corregir campo para que sea foraneo de una nueva tabla genero
     Email = models.CharField(max_length=60)
 
 class Auxiliar(models.Model):
@@ -48,8 +48,8 @@ class Medico(models.Model):
 class Paciente(models.Model):
     ID_PACIENTE = models.AutoField(primary_key=True)
     Persona_ID_PERSONA = models.ForeignKey(Persona, on_delete=models.CASCADE)
-    Medico_ID_MEDICO = models.ForeignKey(Medico, on_delete=models.CASCADE)
-    Familiar_ID_FAMILIAR = models.ForeignKey(Familiar, on_delete=models.CASCADE)
+    Medico_ID_MEDICO = models.ForeignKey(Medico, on_delete=models.CASCADE, null=True)
+    Familiar_ID_FAMILIAR = models.ForeignKey(Familiar, on_delete=models.CASCADE, null=True)
     Direccion = models.CharField(max_length=255)
     Ciudad = models.CharField(max_length=60)
     Latitud = models.DecimalField(max_digits= 11, decimal_places= 8)
