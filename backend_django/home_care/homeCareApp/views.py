@@ -1,5 +1,4 @@
-from ast import pattern
-from asyncio.windows_events import NULL
+
 import datetime
 import email
 import json
@@ -180,6 +179,33 @@ def getPersona(request, id):
             resp = HttpResponse()
             resp.headers['Content-Type'] = "text/json"
             resp.content = json.dumps(data)
+            return resp
+        except:
+            return HttpResponseServerError("Error de servidor")
+    else:
+        return HttpResponseNotAllowed(['GET'], "Método inválido")
+
+def getPeople(request):
+    if request.method == 'GET':
+        try:
+            personas = Persona.objects.all()
+            if (not personas):
+                return HttpResponseBadRequest("No existen personas cargados.")
+            
+            allPeople = []
+            for per in personas:
+                data = {
+                    "Identificacion" : per.Identificacion.ID_LOGIN,
+                    "Rol" : per.Identificacion.ID_ROL.Rol,
+                    "Nombre" : per.Nombre,
+                    "Apellido" : per.Apellido,
+                    "Telefono" : per.Telefono,
+                }
+                allPeople.append(data)
+
+            resp = HttpResponse()
+            resp.headers['Content-Type'] = "text/json"
+            resp.content = json.dumps(allPeople)
             return resp
         except:
             return HttpResponseServerError("Error de servidor")
