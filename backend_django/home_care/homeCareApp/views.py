@@ -1,6 +1,3 @@
-
-import datetime
-import email
 import json
 import re
 from django.shortcuts import render
@@ -262,7 +259,6 @@ def getPaciente(request, id):
 
             paciente = Paciente.objects.filter(Persona_ID_PERSONA = persona.ID_PERSONA).first()
 
-            print(paciente.Medico_ID_MEDICO)
             data = {
                 "Identificacion" : id,
                 "Medico_ID_MEDICO" : paciente.Medico_ID_MEDICO.ID_MEDICO if paciente.Medico_ID_MEDICO != None else None,
@@ -318,14 +314,18 @@ def nuevoEspecialidad(request):
     if request.method == 'POST':
         try:
             data = json.loads(request.body)
-
             #seccion para validacion de existencia de registros en tablas foraneas
+            esp = Especialidad.objects.filter(especialidad = data["especialidad"]).first()
+            
+            if(esp != None):
+                return HttpResponseBadRequest("Ya existe la especialidad") 
 
             #instancia de la clase
-
-
-            #especialidad.save()
-            return HttpResponse("Signo Vital agregado")
+            especialidad = Especialidad(
+                especialidad = data["especialidad"]
+            )
+            especialidad.save()
+            return HttpResponse("Especialidad agregada")
         except:
             return HttpResponseBadRequest("Error en los datos recibidos")
     else:
@@ -334,14 +334,44 @@ def nuevoEspecialidad(request):
 def getEspecialidad(request, id):
     if request.method == 'GET':
         try:
+            especialidad = Especialidad.objects.filter(ID_ESPECIALIDAD = id).first()
+            print(especialidad)
 
+            if(especialidad == None):
+                return HttpResponseBadRequest("No existe la especialidad")
 
             data = {
-
+                "especialidad" : especialidad.especialidad
             }
+
             resp = HttpResponse()
             resp.headers['Content-Type'] = "text/json"
             resp.content = json.dumps(data)
+            return resp
+        except:
+            return HttpResponseServerError("Error de servidor")
+    else:
+        return HttpResponseNotAllowed(['GET'], "Método inválido")
+
+def getEspecialidades(request):
+    if request.method == 'GET':
+        try:
+            especialidades = Especialidad.objects.all()
+            print(especialidades)
+            if (not especialidades):
+                return HttpResponseBadRequest("No existen especialidades cargadas.")
+            
+            allEspecialidades = []
+            for esp in especialidades:
+                data = {
+                    "id" : esp.ID_ESPECIALIDAD,
+                    "Especialidad" : esp.especialidad,
+                }
+                allEspecialidades.append(data)
+
+            resp = HttpResponse()
+            resp.headers['Content-Type'] = "text/json"
+            resp.content = json.dumps(allEspecialidades)
             return resp
         except:
             return HttpResponseServerError("Error de servidor")
@@ -352,13 +382,33 @@ def nuevoMedico(request):
     if request.method == 'POST':
         try:
             data = json.loads(request.body)
+            
+            #seccion para validacion de existencia de persona en DB
+            persona = Persona.objects.filter(Identificacion = data["Id_persona"]).first()
+            if(not persona):
+                return HttpResponseBadRequest("No existe ninguna persona con esa identificación")
 
-            #seccion para validacion de existencia de registros en tablas foraneas
+            #seccion para validacion de existencia de persona en DB
+            especialidad = Especialidad.objects.filter(ID_ESPECIALIDAD = data["Id_especialidad"]).first()
+            if(not especialidad):
+                return HttpResponseBadRequest("No existe ninguna la especialidad indicada")
 
-            #instancia de la clase
+            if(persona.Identificacion.ID_ROL.ID_ROL != 1):
+                return HttpResponseBadRequest("No esta identificado como médico este usuario")
 
+            med = Medico.objects.filter(ID_PERSONA = persona.ID_PERSONA).first()
+            if(med):
+                return HttpResponseBadRequest("Ya esta registrado como Medico")
 
-            #medico.save()
+            # instancia de la clase
+            # persona.medico_set.create(Registro=data["Registro"],
+            #             ID_ESPECIALIDAD=data["Id_especialidad"])
+            medico = Medico(
+                ID_PERSONA = persona,
+                ID_ESPECIALIDAD = especialidad,
+                Registro = data["Registro"]
+            )
+            medico.save()
             return HttpResponse("Medico agregado")
         except:
             return HttpResponseBadRequest("Error en los datos recibidos")
@@ -368,13 +418,21 @@ def nuevoMedico(request):
 def getMedico(request, id):
     if request.method == 'GET':
         try:
-            usuario = Usuarios.objects.filter(ID_LOGIN = id).first()
-            if(not usuario):
-                return HttpResponseBadRequest("No existe Usuario")
+            persona = Persona.objects.filter(Identificacion = id).first()
+            if(not persona):
+                return HttpResponseBadRequest("No existe un usuario con ese documento")
+
+            if(persona.Identificacion.ID_ROL.ID_ROL != 1):
+                return HttpResponseBadRequest("este Usuario no esta asociado como Medico")
+
+            medico = Medico.objects.filter(ID_PERSONA = persona.ID_PERSONA).first()
 
             data = {
-
+                "ID_MEDICO" : id,
+                "ID_ESPECIALIDAD" : medico.ID_ESPECIALIDAD.especialidad,
+                "Registro" : medico.Registro,
             }
+            
             resp = HttpResponse()
             resp.headers['Content-Type'] = "text/json"
             resp.content = json.dumps(data)
@@ -389,12 +447,25 @@ def nuevoFamiliar(request):
         try:
             data = json.loads(request.body)
 
-            #seccion para validacion de existencia de registros en tablas foraneas
+            #seccion para validacion de existencia de persona en DB
+            persona = Persona.objects.filter(Identificacion = data["ID_PERSONA"]).first()
+            if(not persona):
+                return HttpResponseBadRequest("No existe ninguna persona con esa identificación")
+
+            if(persona.Identificacion.ID_ROL.ID_ROL != 4):
+                return HttpResponseBadRequest("No esta identificado como Familiar este usuario")
+
+            fam = Familiar.objects.filter(ID_PERSONA = persona.ID_PERSONA).first()
+            if(fam):
+                return HttpResponseBadRequest("Ya esta registrado como Familiar")
 
             #instancia de la clase
+            familiar = Familiar(
+                ID_PERSONA = persona,
+                parentesco = data["parentesco"]
+            )
 
-
-            #familiar.save()
+            familiar.save()
             return HttpResponse("Familiar agregado")
         except:
             return HttpResponseBadRequest("Error en los datos recibidos")
@@ -404,13 +475,21 @@ def nuevoFamiliar(request):
 def getFamiliar(request, id):
     if request.method == 'GET':
         try:
-            usuario = Usuarios.objects.filter(ID_LOGIN = id).first()
-            if(not usuario):
-                return HttpResponseBadRequest("No existe Usuario")
+            #seccion para validacion de existencia de persona en DB
+            persona = Persona.objects.filter(Identificacion = id).first()
+            if(not persona):
+                return HttpResponseBadRequest("No existe un usuario con ese documento")
+
+            if(persona.Identificacion.ID_ROL.ID_ROL != 4):
+                return HttpResponseBadRequest("este Usuario no esta asociado como Familiar")
+
+            familiar = Familiar.objects.filter(ID_PERSONA = persona.ID_PERSONA).first()
 
             data = {
-
+                "ID_FAMILIAR" : id,
+                "parentesco" : familiar.parentesco
             }
+
             resp = HttpResponse()
             resp.headers['Content-Type'] = "text/json"
             resp.content = json.dumps(data)

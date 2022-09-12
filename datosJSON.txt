@@ -19,13 +19,6 @@ http://127.0.0.1:8000/getSignoVital/<numEntero>
 http://127.0.0.1:8000/getRol/<numEntero>
 
 
-# agregar Usuario
-{
-    "ID_LOGIN": 123,
-    "ID_ROL" : 1,
-    "Password" : "hola123456"
-}
-
 #consultar Usuario
 http://127.0.0.1:8000/getUsuario/<numEntero>
 
@@ -62,3 +55,25 @@ http://127.0.0.1:8000/getRol/<numEntero>
 #consultar pacientes
 http://127.0.0.1:8000/getPaciente/<numEntero>
 http://127.0.0.1:8000/getAllPatients
+
+
+
+#agregar Medico
+{
+    "ID_PERSONA" : 123,
+    "ID_ESPECIALIDAD" : 
+    "Registro" : "abcd123456"
+}
+
+#agregar especialidad
+{
+    "especialidad" : "Pediatria"
+}
+
+
+
+#agregar familiar
+{
+    "ID_PERSONA" : 789,
+    "parentesco" : "tio"
+}

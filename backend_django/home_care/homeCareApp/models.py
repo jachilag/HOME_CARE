@@ -42,7 +42,7 @@ class Especialidad (models.Model):
 class Medico(models.Model):
     ID_MEDICO = models.AutoField(primary_key=True)
     ID_PERSONA = models.ForeignKey(Persona, on_delete=models.CASCADE)
-    ID_ESPECIALIDAD = models.ForeignKey(Especialidad, on_delete=models.CASCADE)
+    ID_ESPECIALIDAD = models.ForeignKey(Especialidad, on_delete=models.CASCADE, null= True)
     Registro = models.CharField(max_length=60)
 
 class Paciente(models.Model):

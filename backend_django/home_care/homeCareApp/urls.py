@@ -24,6 +24,7 @@ urlpatterns = [
 
     path('nuevoEspecialidad', views.nuevoEspecialidad, name='nuevoEspecialidad'),
     path('getEspecialidad/<int:id>', views.getEspecialidad, name='getEspecialidad'),
+    path('getEspecialidades', views.getEspecialidades, name='getEspecialidades'),
 
     path('nuevoFamiliar', views.nuevoFamiliar, name='nuevoFamiliar'),
     path('getFamiliar/<int:id>', views.getFamiliar, name='getFamiliar'),
