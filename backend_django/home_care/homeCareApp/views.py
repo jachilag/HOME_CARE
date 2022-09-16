@@ -545,11 +545,12 @@ def getRegistro_SV(request, id):
             #    "Medida" : registro_sv.Medida,
             #    "Fecha_Hora" : registro_sv.Fecha_Hora
             #    }
-            #registro_sv_query = model_to_dict(registro_sv)
             #resp = HttpResponse()
             #resp.headers['Content-Type'] = "text/json"
-            #resp.content = json.dumps(data)
+            #resp.content = json.dumps(registro_sv_query)
             #return resp
+
+            #registro_sv_query = model_to_dict(registro_sv)
 
         except:
             return HttpResponseServerError("Error de servidor")
