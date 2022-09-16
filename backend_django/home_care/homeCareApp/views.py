@@ -1,7 +1,10 @@
 import json
+import mimetypes
 import re
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseNotAllowed, HttpResponseBadRequest, HttpResponseServerError
+from django.forms.models import model_to_dict
+from django.core import serializers
 
 from .models import Signos_vitales, Rol, Usuarios, Persona, Auxiliar, Enfermero, Familiar, Especialidad, Medico, Paciente, Registro_SV, T_Diagnostico, T_Sugerencias
 
@@ -499,3 +502,56 @@ def getFamiliar(request, id):
     else:
         return HttpResponseNotAllowed(['GET'], "Método inválido")
 
+def nuevoRegistro_SV (request):
+    if request.method == 'POST':
+        try:
+            request_data = json.loads(request.body)
+            #data_valitation Paciente model
+            paciente = Paciente.objects.filter(ID_PACIENTE = request_data["Paciente_ID_PACIENTE"]).first()
+            if(not paciente):
+                return HttpResponseBadRequest ("El paciente indicado no se encuentra registrado")
+            signo_vital = Signos_vitales.objects.filter(ID_SIGNO_VITAL = request_data["SV_ID_SIGNO_VITAL"]).first()   
+            if (not signo_vital):
+                return HttpResponseBadRequest ("El tipo de medida no existe")
+            #New Registro_SV object
+            registro_sv = Registro_SV(
+                SV_ID_SIGNO_VITAL = signo_vital,
+                Paciente_ID_PACIENTE = paciente,
+                Medida = request_data["Medida"]
+                #Fecha_Hora = timezone.now()
+                )     
+            registro_sv.save()
+            return HttpResponse("Se registro el dato exitosamente")
+        except:
+            return HttpResponseBadRequest("Error en los datos recibidos")
+    else:
+        return HttpResponseNotAllowed(['POST'], "Método inválido")
+
+
+def getRegistro_SV(request, id):
+    if request.method == 'GET':
+        try:
+            #data_valitation Registro_SV model
+            registro_sv = Registro_SV.objects.filter(ID_REGISTRO_SV = id).first()
+            if(not registro_sv):
+                return HttpResponseBadRequest ("No se encontro registro")
+            registro_sv_query = serializers.serialize('json', [registro_sv,])
+            return HttpResponse(registro_sv_query, content_type = "text/json") 
+
+            #Metodo Fallido
+            #registro_sv_query = {
+            #    "Paciente" : registro_sv.Paciente_ID_PACIENTE,
+            #    "Signo Vital" : registro_sv.SV_ID_SIGNO_VITAL,
+            #    "Medida" : registro_sv.Medida,
+            #    "Fecha_Hora" : registro_sv.Fecha_Hora
+            #    }
+            #registro_sv_query = model_to_dict(registro_sv)
+            #resp = HttpResponse()
+            #resp.headers['Content-Type'] = "text/json"
+            #resp.content = json.dumps(data)
+            #return resp
+
+        except:
+            return HttpResponseServerError("Error de servidor")
+    else:
+        return HttpResponseNotAllowed(['GET'], "Método inválido")

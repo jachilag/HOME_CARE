@@ -1,8 +1,12 @@
 from django.db import models
+from django.utils import timezone
 
 class Signos_vitales(models.Model):
     ID_SIGNO_VITAL = models.AutoField(primary_key=True)
     Tipo_Signo = models.CharField(max_length=60)
+    
+    def __str__(self):
+        return self.Tipo_Signo
 
 class Rol(models.Model):
     ID_ROL = models.AutoField(primary_key=True)
@@ -58,11 +62,12 @@ class Paciente(models.Model):
 
 class Registro_SV(models.Model):
     ID_REGISTRO_SV = models.AutoField(primary_key=True)
-    SV_ID_SIGNO_VITAL = models.ForeignKey(Persona, on_delete=models.CASCADE)
-    Paciente_ID_PACIENTE = models.ForeignKey(Medico, on_delete=models.CASCADE)
-    Medida = models.DecimalField(max_digits= 6, decimal_places= 3)
-    Fecha_Hora = models.DateTimeField()
-    Fecha_Nacimiento = models.CharField(max_length=128)
+    SV_ID_SIGNO_VITAL = models.ForeignKey(Signos_vitales, on_delete = models.CASCADE)
+    Paciente_ID_PACIENTE = models.ForeignKey(Paciente, on_delete = models.CASCADE)
+    Medida = models.DecimalField(max_digits = 6, decimal_places = 3)
+    Fecha_Hora = models.DateTimeField(default = timezone.now, blank = False)
+
+
 
 class T_Diagnostico(models.Model):
     ID_DIAGNOSTICO = models.BigAutoField(primary_key=True)

@@ -28,4 +28,7 @@ urlpatterns = [
 
     path('nuevoFamiliar', views.nuevoFamiliar, name='nuevoFamiliar'),
     path('getFamiliar/<int:id>', views.getFamiliar, name='getFamiliar'),
+
+    path('nuevoRegistro_SV', views.nuevoRegistro_SV, name = 'nuevoRegistro_SV'),
+    path('getRegistro_SV/<int:id>', views.getRegistro_SV, name = 'getRegistro_SV'),
 ]

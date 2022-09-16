@@ -77,3 +77,10 @@ http://127.0.0.1:8000/getAllPatients
     "ID_PERSONA" : 789,
     "parentesco" : "tio"
 }
+
+#New data Register_SV
+{
+    "SV_ID_SIGNO_VITAL" : 4,
+    "Paciente_ID_PACIENTE" : 4,
+    "Medida" : 35.000
+}
