@@ -538,17 +538,16 @@ def getRegistro_SV(request, id):
             registro_sv_query = serializers.serialize('json', [registro_sv,])
             return HttpResponse(registro_sv_query, content_type = "text/json") 
 
-            #Metodo Fallido
+            #Metodo Fallido No es posible serializar modelos o funciones de django como DateTime o Decimal.
             #registro_sv_query = {
-            #    "Paciente" : registro_sv.Paciente_ID_PACIENTE,
-            #    "Signo Vital" : registro_sv.SV_ID_SIGNO_VITAL,
-            #    "Medida" : registro_sv.Medida,
-            #    "Fecha_Hora" : registro_sv.Fecha_Hora
-            #    }
-            #resp = HttpResponse()
-            #resp.headers['Content-Type'] = "text/json"
-            #resp.content = json.dumps(registro_sv_query)
-            #return resp
+                #"ID_REGISTRO_SV" : id,
+                #"SV_ID_SIGNO_VITAL" : registro_sv.SV_ID_SIGNO_VITAL.Tipo_Signo,
+                #"Paciente_ID_PACIENTE" : registro_sv.Paciente_ID_PACIENTE.ID_PACIENTE,
+                #"Medida" : registro_sv.Medida,
+                #"Fecha_Hora" : registro_sv.Fecha_Hora,
+            #}
+            #data = json.dumps(registro_sv_query)
+            #return HttpResponse(data, content_type = "text/json")
 
             #registro_sv_query = model_to_dict(registro_sv)
 
