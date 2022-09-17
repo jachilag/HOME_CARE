@@ -555,3 +555,175 @@ def getRegistro_SV(request, id):
             return HttpResponseServerError("Error de servidor")
     else:
         return HttpResponseNotAllowed(['GET'], "Método inválido")
+
+def nuevoDiagnostico(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+
+            paciente = Paciente.objects.filter(Persona_ID_PERSONA__Identificacion = data["ID_PACIENTE"]).first()
+            if(not paciente):
+                return HttpResponseBadRequest("El paciente indicado no se encuentra registrado")
+            
+
+            if(paciente.Persona_ID_PERSONA.Identificacion.ID_ROL.ID_ROL != 3):
+                return HttpResponseBadRequest("Este usuario no está registrado como paciente")
+            
+            med = Medico.objects.filter(ID_PERSONA__Identificacion = data["ID_MEDICO"]).first()
+            if(not med):
+                return HttpResponseBadRequest("El médico indicado no se encuentra registado")
+            
+            if(med.ID_PERSONA.Identificacion.ID_ROL.ID_ROL != 1):
+                return HttpResponseBadRequest("Este usuario no está registrado como médico")
+
+            #return HttpResponse("Debug")
+
+            diagnostico = T_Diagnostico(
+                ID_PACIENTE = paciente,
+                ID_MEDICO = med,
+                Diagnostico = data["Diagnostico"]                
+            )
+            diagnostico.save()
+            return HttpResponse("Diagostico agregado")
+        except:
+            return HttpResponseBadRequest("Error en los datos procesados")
+    else:
+        return HttpResponseNotAllowed(['POST'], "Método invalido")
+        
+def getDiagnostico(request, id):
+    if request.method == 'GET':
+        try: 
+            
+            diag = T_Diagnostico.objects.filter(ID_DIAGNOSTICO = id).first()
+            #persona = Persona.objects.filter()
+            #paciente = Paciente.objects.filter(Persona_ID_PERSONA = persona.ID_PERSONA).first()
+
+            if(not diag):
+                return HttpResponseBadRequest("No existe un diagnóstico con esa numeración")
+            
+            data = {
+                "Id_Diagnostico": id,
+                "Id_Paciente": diag.ID_PACIENTE.Persona_ID_PERSONA.Identificacion.ID_LOGIN,
+                "Id_Medico": diag.ID_MEDICO.ID_PERSONA.Nombre,
+                "Diagnostico": str(diag.Diagnostico),
+                "Fecha_hora": str(diag.fecha_hora)
+            }
+
+            resp = HttpResponse()
+            resp.headers['Content-Type'] = "text/json"
+            resp.content = json.dumps(data)
+            return resp
+        except:
+            return HttpResponseServerError("Error de servidor")
+    else:
+        return HttpResponseNotAllowed(['GET'], "Método inválido")
+
+def getAllDiagnostico(request):
+    if request.method == 'GET':
+        try:
+            diagnosticos = T_Diagnostico.objects.all()
+            if(not diagnosticos):
+                return HttpResponseBadRequest("No existen diagnósticos")
+
+            allDiagnosticos = []
+            for diag in diagnosticos:
+                #data = serializers.serialize('json', [diag,])
+
+                data = {
+                   "Id_Diagnostico": diag.ID_DIAGNOSTICO,
+                   "Id_Paciente": diag.ID_PACIENTE.Persona_ID_PERSONA.Identificacion.ID_LOGIN,
+                   "Nombre_Medico": diag.ID_MEDICO.ID_PERSONA.Nombre,
+                   "Diagnostico": str(diag.Diagnostico),
+                   "Fecha_hora": str(diag.fecha_hora)
+                }
+                allDiagnosticos.append(data)
+
+            return HttpResponse(allDiagnosticos, content_type = "text/json")
+        except:
+            return HttpResponseServerError("Error de servidor")
+    else:
+        return HttpResponseNotAllowed(['GET'], "Método inválido")
+
+def nuevaSugerencia(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            
+            diagnostico = T_Diagnostico.objects.filter(ID_DIAGNOSTICO = data["ID_DIAGNOSTICO"]).first()
+            if(not diagnostico):
+                return HttpResponseBadRequest("No existe ningún diagnostico con esa numeración para hacerle una sugerencia")
+            
+            med = Medico.objects.filter(ID_PERSONA__Identificacion = data["ID_MEDICO"]).first()
+            if(not med):
+                return HttpResponseBadRequest("El médico indicado no se encuentra registado")
+            
+            if(med.ID_PERSONA.Identificacion.ID_ROL.ID_ROL != 1):
+                return HttpResponseBadRequest("Este usuario no está registrado como médico")   
+            
+            #return HttpResponse("Debug")
+
+            sugerencia = T_Sugerencias(
+                ID_DIAGNOSTICO = diagnostico,
+                ID_MEDICO = med,
+                descripcion = data["descripcion"]                
+            )
+            sugerencia.save()
+            return HttpResponse("Sugerencia agregada")
+        except:
+            return HttpResponseBadRequest("Error en los datos procesados")
+    else:
+        return HttpResponseNotAllowed(['POST'], "Método invalido")
+
+def getSugerencia(request, id):
+    if request.method == 'GET':
+        try: 
+            
+            sug = T_Sugerencias.objects.filter(ID_SUGERENCIAS = id).first()
+            #persona = Persona.objects.filter()
+            #paciente = Paciente.objects.filter(Persona_ID_PERSONA = persona.ID_PERSONA).first()
+
+            if(not sug):
+                return HttpResponseBadRequest("No existe una sugerencia con esa numeración")
+            
+            data = {
+                "Id_Sugerencia": id,
+                "Id_Medico": sug.ID_MEDICO.ID_PERSONA.Nombre,
+                "Sugerencia": str(sug.descripcion),
+                "Fecha_hora": str(sug.fecha_hora)
+            }
+
+            resp = HttpResponse()
+            resp.headers['Content-Type'] = "text/json"
+            resp.content = json.dumps(data)
+            return resp
+        except:
+            return HttpResponseServerError("Error de servidor")
+    else:
+        return HttpResponseNotAllowed(['GET'], "Método inválido")
+
+def getAllSugerencias(request):
+    if request.method == 'GET':
+        try:
+            sugerencias = T_Sugerencias.objects.all()
+            if(not sugerencias):
+                return HttpResponseBadRequest("No existen sugerencias")
+            
+            allSugerencias = []
+            for sug in sugerencias:
+                #data = serializers.serialize('json', [diag,])
+
+                data = {
+                   "Id_Sugerencia": sug.ID_SUGERENCIAS,
+                   "Id_Diagnostico": sug.ID_DIAGNOSTICO.ID_DIAGNOSTICO,
+                   "Nombre_Medico": sug.ID_MEDICO.ID_PERSONA.Nombre,
+                   "Sugerencia": str(sug.descripcion),
+                   "Fecha_hora": str(sug.fecha_hora)
+                }
+                allSugerencias.append(data)
+            #return HttpResponse(allSugerencias)
+
+            return HttpResponse(allSugerencias, content_type = "text/json")
+        except:
+            return HttpResponseServerError("Error de servidor")
+    else:
+        return HttpResponseNotAllowed(['GET'], "Método inválido")

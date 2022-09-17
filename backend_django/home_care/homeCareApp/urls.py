@@ -31,4 +31,13 @@ urlpatterns = [
 
     path('nuevoRegistro_SV', views.nuevoRegistro_SV, name = 'nuevoRegistro_SV'),
     path('getRegistro_SV/<int:id>', views.getRegistro_SV, name = 'getRegistro_SV'),
+    
+    path('nuevoDiagnostico', views.nuevoDiagnostico, name='nuevoDiagnostico'),
+    path('getDiagnostico/<int:id>', views.getDiagnostico, name='getDiagnostico'),
+    path('getAllDiagnostico', views.getAllDiagnostico, name= 'getAllDiagnostico'),
+
+    path('nuevaSugerencia', views.nuevaSugerencia, name='nuevaSugerencia'),
+    path('getSugerencia/<int:id>', views.getSugerencia, name='getSugerencia'),
+    path('getAllSugerencias', views.getAllSugerencias, name= 'getAllSugerencias'),
+
 ]
