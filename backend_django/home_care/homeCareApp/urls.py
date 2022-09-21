@@ -9,7 +9,7 @@ urlpatterns = [
     path('nuevoRol', views.nuevoRol, name='nuevoRol'),
     path('getRol/<int:id>', views.getRol, name='getRol'),
 
-    path('getUsuario/<int:id>', views.getUsuario, name='getUsuario'),
+    path('login/<int:id>', views.login, name='login'),
 
     path('nuevoPersona', views.nuevoPersona, name='nuevoPersona'),
     path('getPersona/<int:id>', views.getPersona, name='getPersona'),
@@ -29,12 +29,18 @@ urlpatterns = [
     path('nuevoFamiliar', views.nuevoFamiliar, name='nuevoFamiliar'),
     path('getFamiliar/<int:id>', views.getFamiliar, name='getFamiliar'),
 
+    path('nuevoAuxiliar', views.nuevoAuxiliar, name='nuevoAuxiliar'),
+    path('getAuxiliar/<int:id>', views.getAuxiliar, name='getAuxiliar'),
+
+    path('nuevoEnfermero', views.nuevoEnfermero, name='nuevoEnfermero'),
+    path('getEnfermero/<int:id>', views.getEnfermero, name='getEnfermero'),
+
     path('nuevoRegistro_SV', views.nuevoRegistro_SV, name = 'nuevoRegistro_SV'),
     path('getRegistro_SV/<int:id>', views.getRegistro_SV, name = 'getRegistro_SV'),
     
     path('nuevoDiagnostico', views.nuevoDiagnostico, name='nuevoDiagnostico'),
     path('getDiagnostico/<int:id>', views.getDiagnostico, name='getDiagnostico'),
-    path('getAllDiagnostico', views.getAllDiagnostico, name= 'getAllDiagnostico'),
+    path('getAllDiagnosticos', views.getAllDiagnosticos, name= 'getAllDiagnosticos'),
 
     path('nuevaSugerencia', views.nuevaSugerencia, name='nuevaSugerencia'),
     path('getSugerencia/<int:id>', views.getSugerencia, name='getSugerencia'),

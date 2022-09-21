@@ -25,6 +25,7 @@ http://127.0.0.1:8000/getUsuario/<numEntero>
 
 
 #agregar Persona
+# ya no se generara una persona desde este punto sino desde su entidad directamente
 {
     "ID_ROL" : 6,
     "Password" : "hola123456",
@@ -42,7 +43,13 @@ http://127.0.0.1:8000/getRol/<numEntero>
 
 #agregar Paciente
 {
-    "Identificacion" : 258,
+    "Identificacion" : -1,
+    "Password" : "hola123456",
+    "Nombre" : "Administrador",
+    "Apellido" : "Administrador",
+    "Telefono" : "320000",
+    "Genero" : "No_binario",
+    "Email" : "Administrador@gmail.com",
     "Medico_ID_MEDICO" : null,
     "Familiar_ID_FAMILIAR" : null,
     "Direccion" : "kr 60 x cl 60",
@@ -60,8 +67,14 @@ http://127.0.0.1:8000/getAllPatients
 
 #agregar Medico
 {
-    "ID_PERSONA" : 123,
-    "ID_ESPECIALIDAD" : 
+    "Identificacion" : -1,
+    "Password" : "hola123456",
+    "Nombre" : "Administrador",
+    "Apellido" : "Administrador",
+    "Telefono" : "320000",
+    "Genero" : "No_binario",
+    "Email" : "Administrador@gmail.com",
+    "ID_ESPECIALIDAD" : 1,
     "Registro" : "abcd123456"
 }
 
@@ -70,11 +83,15 @@ http://127.0.0.1:8000/getAllPatients
     "especialidad" : "Pediatria"
 }
 
-
-
 #agregar familiar
 {
-    "ID_PERSONA" : 789,
+    "Identificacion" : -1,
+    "Password" : "hola123456",
+    "Nombre" : "Administrador",
+    "Apellido" : "Administrador",
+    "Telefono" : "320000",
+    "Genero" : "No_binario",
+    "Email" : "Administrador@gmail.com",
     "parentesco" : "tio"
 }
 
@@ -84,3 +101,12 @@ http://127.0.0.1:8000/getAllPatients
     "Paciente_ID_PACIENTE" : 4,
     "Medida" : 35.000
 }
+
+#login consulta de usuario y contraseña
+{
+    "ID_ROL": 4,
+    "Identificacion" : -1,
+    "Password" : "hola12456"
+}
+
+

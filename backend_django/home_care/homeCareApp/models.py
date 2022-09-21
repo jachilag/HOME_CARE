@@ -67,15 +67,12 @@ class Registro_SV(models.Model):
     Medida = models.DecimalField(max_digits = 6, decimal_places = 3)
     Fecha_Hora = models.DateTimeField(default = timezone.now, blank = False)
 
-
-
 class T_Diagnostico(models.Model):
     ID_DIAGNOSTICO = models.BigAutoField(primary_key=True)
     ID_PACIENTE = models.ForeignKey(Paciente, on_delete=models.CASCADE)
     ID_MEDICO = models.ForeignKey(Medico, on_delete=models.CASCADE)
     Diagnostico = models.TextField()
     fecha_hora = models.DateTimeField(default = timezone.now, blank = False)
-
 
 class T_Sugerencias(models.Model):
     ID_SUGERENCIAS = models.AutoField(primary_key=True)

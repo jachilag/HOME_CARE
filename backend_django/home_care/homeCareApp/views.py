@@ -1,4 +1,5 @@
 import json
+import datetime
 import mimetypes
 import re
 from django.shortcuts import render
@@ -89,26 +90,31 @@ def getRol(request, id):
     else:
         return HttpResponseNotAllowed(['GET'], "Método inválido")
 
-def getUsuario(request, id):
-    if request.method == 'GET':
+def login(request):
+    if request.method == 'POST':
         try:
-            usuario = Usuarios.objects.filter(ID_LOGIN = id).first()
+            data = json.loads(request.body)
+            rol = data['ID_ROL']
+            identificacion = data['Identificacion']
+            password = data['password']
+
+            usuario = Usuarios.objects.filter(ID_LOGIN = identificacion, password = password, Rol = rol).first()
             if(not usuario):
-                return HttpResponseBadRequest("No existe Usuario")
+                return HttpResponse("No existe Usuario", status = 401)
 
             data = {
                 "ID_LOGIN" : usuario.ID_LOGIN,
                 "ROL" : usuario.ID_ROL.Rol,
-                "Password" : usuario.Password
             }
+
             resp = HttpResponse()
             resp.headers['Content-Type'] = "text/json"
             resp.content = json.dumps(data)
             return resp
         except:
-            return HttpResponseServerError("Error de servidor")
+            return HttpResponseBadRequest("Error de servidor")
     else:
-        return HttpResponseNotAllowed(['GET'], "Método inválido")
+        return HttpResponseNotAllowed(['POST'], "Método inválido")
 
 def nuevoPersona(request):
     if request.method == 'POST':
@@ -218,18 +224,25 @@ def nuevoPaciente(request):
             data = json.loads(request.body)
 
             #seccion para validacion de existencia de registros en tablas foraneas
-            persona = Persona.objects.filter(Identificacion = data["Identificacion"]).first()
-            if(not persona):
-                return HttpResponseBadRequest("No existe un usuario con ese documento")
-
-            if(persona.Identificacion.ID_ROL.ID_ROL != 3):
-                return HttpResponseBadRequest("este Usuario no esta asociado como paciente")
-            
-            pac = Paciente.objects.filter(Persona_ID_PERSONA = persona.ID_PERSONA).first()
-            if(pac):
-                return HttpResponseBadRequest("Ya esta registrado como paciente")
+            if(verificarInfoNuevo(data) != "verificado"):
+                return HttpResponseBadRequest(verificarInfoNuevo(data))
 
             #instancia de la clase
+            usuario = Usuarios(
+                ID_LOGIN = data["Identificacion"],
+                ID_ROL = 3,
+                Password = data["Password"]
+            )
+
+            persona = Persona(
+                Identificacion = usuario,
+                Nombre = data["Nombre"],
+                Apellido = data["Apellido"],
+                Telefono = data["Telefono"],
+                Genero = data["Genero"],
+                Email = data["Email"]
+            )
+            
             paciente = Paciente(
                 Persona_ID_PERSONA = persona,
                 Medico_ID_MEDICO = data["Medico_ID_MEDICO"],
@@ -240,7 +253,9 @@ def nuevoPaciente(request):
                 Longitud = data["Longitud"],
                 Fecha_Nacimiento = data["Fecha_Nacimiento"]
             )
-            
+
+            usuario.save()
+            persona.save()
             paciente.save()
             return HttpResponse("Paciente agregado")
         except:
@@ -386,31 +401,39 @@ def nuevoMedico(request):
         try:
             data = json.loads(request.body)
             
-            #seccion para validacion de existencia de persona en DB
-            persona = Persona.objects.filter(Identificacion = data["Id_persona"]).first()
-            if(not persona):
-                return HttpResponseBadRequest("No existe ninguna persona con esa identificación")
+            #seccion para validacion de existencia de registros en tablas foraneas
+            if(verificarInfoNuevo(data) != "verificado"):
+                return HttpResponseBadRequest(verificarInfoNuevo(data))
 
-            #seccion para validacion de existencia de persona en DB
+            #seccion para validacion de existencia de especialidad valida
             especialidad = Especialidad.objects.filter(ID_ESPECIALIDAD = data["Id_especialidad"]).first()
             if(not especialidad):
-                return HttpResponseBadRequest("No existe ninguna la especialidad indicada")
+                return HttpResponseBadRequest("No existe la especialidad indicada")
 
-            if(persona.Identificacion.ID_ROL.ID_ROL != 1):
-                return HttpResponseBadRequest("No esta identificado como médico este usuario")
+            #instancia de la clase
+            usuario = Usuarios(
+                ID_LOGIN = data["Identificacion"],
+                ID_ROL = 1,
+                Password = data["Password"]
+            )
 
-            med = Medico.objects.filter(ID_PERSONA = persona.ID_PERSONA).first()
-            if(med):
-                return HttpResponseBadRequest("Ya esta registrado como Medico")
+            persona = Persona(
+                Identificacion = usuario,
+                Nombre = data["Nombre"],
+                Apellido = data["Apellido"],
+                Telefono = data["Telefono"],
+                Genero = data["Genero"],
+                Email = data["Email"]
+            )
 
-            # instancia de la clase
-            # persona.medico_set.create(Registro=data["Registro"],
-            #             ID_ESPECIALIDAD=data["Id_especialidad"])
             medico = Medico(
                 ID_PERSONA = persona,
                 ID_ESPECIALIDAD = especialidad,
                 Registro = data["Registro"]
             )
+
+            usuario.save()
+            persona.save()
             medico.save()
             return HttpResponse("Medico agregado")
         except:
@@ -431,7 +454,12 @@ def getMedico(request, id):
             medico = Medico.objects.filter(ID_PERSONA = persona.ID_PERSONA).first()
 
             data = {
-                "ID_MEDICO" : id,
+                "Identificacion" : id,
+                "Nombre" : persona.Nombre,
+                "Apellido" : persona.Apellido,
+                "Genero" : persona.Genero,
+                "Telefono" : persona.Telefono,
+                "Email" : persona.Email,
                 "ID_ESPECIALIDAD" : medico.ID_ESPECIALIDAD.especialidad,
                 "Registro" : medico.Registro,
             }
@@ -450,24 +478,33 @@ def nuevoFamiliar(request):
         try:
             data = json.loads(request.body)
 
-            #seccion para validacion de existencia de persona en DB
-            persona = Persona.objects.filter(Identificacion = data["ID_PERSONA"]).first()
-            if(not persona):
-                return HttpResponseBadRequest("No existe ninguna persona con esa identificación")
-
-            if(persona.Identificacion.ID_ROL.ID_ROL != 4):
-                return HttpResponseBadRequest("No esta identificado como Familiar este usuario")
-
-            fam = Familiar.objects.filter(ID_PERSONA = persona.ID_PERSONA).first()
-            if(fam):
-                return HttpResponseBadRequest("Ya esta registrado como Familiar")
+            #seccion para validacion de existencia de registros en tablas foraneas
+            if(verificarInfoNuevo(data) != "verificado"):
+                return HttpResponseBadRequest(verificarInfoNuevo(data))
 
             #instancia de la clase
+            usuario = Usuarios(
+                ID_LOGIN = data["Identificacion"],
+                ID_ROL = 4,
+                Password = data["Password"]
+            )
+
+            persona = Persona(
+                Identificacion = usuario,
+                Nombre = data["Nombre"],
+                Apellido = data["Apellido"],
+                Telefono = data["Telefono"],
+                Genero = data["Genero"],
+                Email = data["Email"]
+            )
+
             familiar = Familiar(
                 ID_PERSONA = persona,
                 parentesco = data["parentesco"]
             )
 
+            usuario.save()
+            persona.save()
             familiar.save()
             return HttpResponse("Familiar agregado")
         except:
@@ -478,21 +515,161 @@ def nuevoFamiliar(request):
 def getFamiliar(request, id):
     if request.method == 'GET':
         try:
-            #seccion para validacion de existencia de persona en DB
             persona = Persona.objects.filter(Identificacion = id).first()
             if(not persona):
                 return HttpResponseBadRequest("No existe un usuario con ese documento")
 
             if(persona.Identificacion.ID_ROL.ID_ROL != 4):
-                return HttpResponseBadRequest("este Usuario no esta asociado como Familiar")
+                return HttpResponseBadRequest("este Usuario no esta asociado como familiar")
 
             familiar = Familiar.objects.filter(ID_PERSONA = persona.ID_PERSONA).first()
 
             data = {
-                "ID_FAMILIAR" : id,
-                "parentesco" : familiar.parentesco
+                "Identificacion" : id,
+                "Nombre" : persona.Nombre,
+                "Apellido" : persona.Apellido,
+                "Genero" : persona.Genero,
+                "Telefono" : persona.Telefono,
+                "Email" : persona.Email,
+                "Parentesco" : familiar.parentesco,
             }
+            
+            resp = HttpResponse()
+            resp.headers['Content-Type'] = "text/json"
+            resp.content = json.dumps(data)
+            return resp
+        except:
+            return HttpResponseServerError("Error de servidor")
+    else:
+        return HttpResponseNotAllowed(['GET'], "Método inválido")
 
+def nuevoAuxiliar(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+
+            #seccion para validacion de existencia de registros en tablas foraneas
+            if(verificarInfoNuevo(data) != "verificado"):
+                return HttpResponseBadRequest(verificarInfoNuevo(data))
+
+            #instancia de la clase
+            usuario = Usuarios(
+                ID_LOGIN = data["Identificacion"],
+                ID_ROL = 2,
+                Password = data["Password"]
+            )
+
+            persona = Persona(
+                Identificacion = usuario,
+                Nombre = data["Nombre"],
+                Apellido = data["Apellido"],
+                Telefono = data["Telefono"],
+                Genero = data["Genero"],
+                Email = data["Email"]
+            )
+
+            auxiliar = Auxiliar(
+                ID_PERSONA = persona,
+            )
+
+            usuario.save()
+            persona.save()
+            auxiliar.save()
+            return HttpResponse("Auxiliar agregado")
+        except:
+            return HttpResponseBadRequest("Error en los datos recibidos")
+    else:
+        return HttpResponseNotAllowed(['POST'], "Método inválido")
+
+def getAuxiliar(request, id):
+    if request.method == 'GET':
+        try:
+            persona = Persona.objects.filter(Identificacion = id).first()
+            if(not persona):
+                return HttpResponseBadRequest("No existe un usuario con ese documento")
+
+            if(persona.Identificacion.ID_ROL.ID_ROL != 2):
+                return HttpResponseBadRequest("este Usuario no esta asociado como auxiliar")
+
+            auxiliar = Auxiliar.objects.filter(ID_PERSONA = persona.ID_PERSONA).first()
+
+            data = {
+                "Identificacion" : id,
+                "Nombre" : persona.Nombre,
+                "Apellido" : persona.Apellido,
+                "Genero" : persona.Genero,
+                "Telefono" : persona.Telefono,
+                "Email" : persona.Email,
+            }
+            
+            resp = HttpResponse()
+            resp.headers['Content-Type'] = "text/json"
+            resp.content = json.dumps(data)
+            return resp
+        except:
+            return HttpResponseServerError("Error de servidor")
+    else:
+        return HttpResponseNotAllowed(['GET'], "Método inválido")
+
+def nuevoEnfermero(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+
+            #seccion para validacion de existencia de registros en tablas foraneas
+            if(verificarInfoNuevo(data) != "verificado"):
+                return HttpResponseBadRequest(verificarInfoNuevo(data))
+
+            #instancia de la clase
+            usuario = Usuarios(
+                ID_LOGIN = data["Identificacion"],
+                ID_ROL = 5,
+                Password = data["Password"]
+            )
+
+            persona = Persona(
+                Identificacion = usuario,
+                Nombre = data["Nombre"],
+                Apellido = data["Apellido"],
+                Telefono = data["Telefono"],
+                Genero = data["Genero"],
+                Email = data["Email"]
+            )
+
+            enfermero = Enfermero(
+                ID_PERSONA = persona,
+            )
+
+            usuario.save()
+            persona.save()
+            enfermero.save()
+            return HttpResponse("enfermero agregado")
+        except:
+            return HttpResponseBadRequest("Error en los datos recibidos")
+    else:
+        return HttpResponseNotAllowed(['POST'], "Método inválido")
+
+def getEnfermero(request, id):
+    if request.method == 'GET':
+        try:
+            persona = Persona.objects.filter(Identificacion = id).first()
+            if(not persona):
+                return HttpResponseBadRequest("No existe un usuario con ese documento")
+
+            if(persona.Identificacion.ID_ROL.ID_ROL != 5):
+                return HttpResponseBadRequest("este Usuario no esta asociado como enfermero")
+
+            enfermero = Enfermero.objects.filter(ID_PERSONA = persona.ID_PERSONA).first()
+
+            data = {
+                "Identificacion" : id,
+                "Nombre" : persona.Nombre,
+                "Apellido" : persona.Apellido,
+                "Genero" : persona.Genero,
+                "Telefono" : persona.Telefono,
+                "Email" : persona.Email,
+            }
+            
             resp = HttpResponse()
             resp.headers['Content-Type'] = "text/json"
             resp.content = json.dumps(data)
@@ -505,28 +682,30 @@ def getFamiliar(request, id):
 def nuevoRegistro_SV (request):
     if request.method == 'POST':
         try:
-            request_data = json.loads(request.body)
+            data = json.loads(request.body)
             #data_valitation Paciente model
-            paciente = Paciente.objects.filter(ID_PACIENTE = request_data["Paciente_ID_PACIENTE"]).first()
+            paciente = Paciente.objects.filter(ID_PACIENTE = data["Paciente_ID_PACIENTE"]).first()
             if(not paciente):
                 return HttpResponseBadRequest ("El paciente indicado no se encuentra registrado")
-            signo_vital = Signos_vitales.objects.filter(ID_SIGNO_VITAL = request_data["SV_ID_SIGNO_VITAL"]).first()   
+
+            signo_vital = Signos_vitales.objects.filter(ID_SIGNO_VITAL = data["SV_ID_SIGNO_VITAL"]).first()   
             if (not signo_vital):
                 return HttpResponseBadRequest ("El tipo de medida no existe")
+
             #New Registro_SV object
             registro_sv = Registro_SV(
                 SV_ID_SIGNO_VITAL = signo_vital,
                 Paciente_ID_PACIENTE = paciente,
-                Medida = request_data["Medida"]
-                #Fecha_Hora = timezone.now()
+                Medida = data["Medida"],
+                Fecha_Hora = datetime.datetime.now()
                 )     
+
             registro_sv.save()
             return HttpResponse("Se registro el dato exitosamente")
         except:
             return HttpResponseBadRequest("Error en los datos recibidos")
     else:
         return HttpResponseNotAllowed(['POST'], "Método inválido")
-
 
 def getRegistro_SV(request, id):
     if request.method == 'GET':
@@ -535,22 +714,18 @@ def getRegistro_SV(request, id):
             registro_sv = Registro_SV.objects.filter(ID_REGISTRO_SV = id).first()
             if(not registro_sv):
                 return HttpResponseBadRequest ("No se encontro registro")
-            registro_sv_query = serializers.serialize('json', [registro_sv,])
-            return HttpResponse(registro_sv_query, content_type = "text/json") 
+                
+            data ={
+                "Signo_vital" : registro_sv.SV_ID_SIGNO_VITAL.Tipo_Signo,
+                "Identificacion" : registro_sv.Paciente_ID_PACIENTE.Persona_ID_PERSONA.Identificacion.ID_LOGIN,
+                "Medida" : float(registro_sv.Medida),
+                "Fecha_Hora": str(registro_sv.Fecha_Hora),
+            }
 
-            #Metodo Fallido No es posible serializar modelos o funciones de django como DateTime o Decimal.
-            #registro_sv_query = {
-                #"ID_REGISTRO_SV" : id,
-                #"SV_ID_SIGNO_VITAL" : registro_sv.SV_ID_SIGNO_VITAL.Tipo_Signo,
-                #"Paciente_ID_PACIENTE" : registro_sv.Paciente_ID_PACIENTE.ID_PACIENTE,
-                #"Medida" : registro_sv.Medida,
-                #"Fecha_Hora" : registro_sv.Fecha_Hora,
-            #}
-            #data = json.dumps(registro_sv_query)
-            #return HttpResponse(data, content_type = "text/json")
-
-            #registro_sv_query = model_to_dict(registro_sv)
-
+            resp = HttpResponse()
+            resp.headers['Content-Type'] = "text/json"
+            resp.content = json.dumps(data)
+            return resp
         except:
             return HttpResponseServerError("Error de servidor")
     else:
@@ -561,28 +736,27 @@ def nuevoDiagnostico(request):
         try:
             data = json.loads(request.body)
 
-            paciente = Paciente.objects.filter(Persona_ID_PERSONA__Identificacion = data["ID_PACIENTE"]).first()
+            paciente = Paciente.objects.filter(Persona_ID_PERSONA = data["ID_PACIENTE"]).first()
             if(not paciente):
                 return HttpResponseBadRequest("El paciente indicado no se encuentra registrado")
             
-
             if(paciente.Persona_ID_PERSONA.Identificacion.ID_ROL.ID_ROL != 3):
                 return HttpResponseBadRequest("Este usuario no está registrado como paciente")
             
-            med = Medico.objects.filter(ID_PERSONA__Identificacion = data["ID_MEDICO"]).first()
+            med = Medico.objects.filter(ID_PERSONA = data["ID_MEDICO"]).first()
             if(not med):
                 return HttpResponseBadRequest("El médico indicado no se encuentra registado")
             
             if(med.ID_PERSONA.Identificacion.ID_ROL.ID_ROL != 1):
                 return HttpResponseBadRequest("Este usuario no está registrado como médico")
 
-            #return HttpResponse("Debug")
-
             diagnostico = T_Diagnostico(
                 ID_PACIENTE = paciente,
                 ID_MEDICO = med,
-                Diagnostico = data["Diagnostico"]                
+                Diagnostico = data["Diagnostico"], 
+                fecha_hora = datetime.datetime.now()          
             )
+
             diagnostico.save()
             return HttpResponse("Diagostico agregado")
         except:
@@ -604,7 +778,7 @@ def getDiagnostico(request, id):
             data = {
                 "Id_Diagnostico": id,
                 "Id_Paciente": diag.ID_PACIENTE.Persona_ID_PERSONA.Identificacion.ID_LOGIN,
-                "Id_Medico": diag.ID_MEDICO.ID_PERSONA.Nombre,
+                "Nombre_Medico": diag.ID_MEDICO.ID_PERSONA.Nombre,
                 "Diagnostico": str(diag.Diagnostico),
                 "Fecha_hora": str(diag.fecha_hora)
             }
@@ -618,20 +792,18 @@ def getDiagnostico(request, id):
     else:
         return HttpResponseNotAllowed(['GET'], "Método inválido")
 
-def getAllDiagnostico(request):
+def getAllDiagnosticos(request, id_paciente):
     if request.method == 'GET':
         try:
-            diagnosticos = T_Diagnostico.objects.all()
+            diagnosticos = T_Diagnostico.objects.filter(ID_PACIENTE = id_paciente)
             if(not diagnosticos):
                 return HttpResponseBadRequest("No existen diagnósticos")
 
             allDiagnosticos = []
             for diag in diagnosticos:
-                #data = serializers.serialize('json', [diag,])
-
                 data = {
                    "Id_Diagnostico": diag.ID_DIAGNOSTICO,
-                   "Id_Paciente": diag.ID_PACIENTE.Persona_ID_PERSONA.Identificacion.ID_LOGIN,
+                   "Id_Paciente": id_paciente,
                    "Nombre_Medico": diag.ID_MEDICO.ID_PERSONA.Nombre,
                    "Diagnostico": str(diag.Diagnostico),
                    "Fecha_hora": str(diag.fecha_hora)
@@ -653,20 +825,19 @@ def nuevaSugerencia(request):
             if(not diagnostico):
                 return HttpResponseBadRequest("No existe ningún diagnostico con esa numeración para hacerle una sugerencia")
             
-            med = Medico.objects.filter(ID_PERSONA__Identificacion = data["ID_MEDICO"]).first()
+            med = Medico.objects.filter(ID_PERSONA = data["ID_MEDICO"]).first()
             if(not med):
                 return HttpResponseBadRequest("El médico indicado no se encuentra registado")
             
             if(med.ID_PERSONA.Identificacion.ID_ROL.ID_ROL != 1):
                 return HttpResponseBadRequest("Este usuario no está registrado como médico")   
             
-            #return HttpResponse("Debug")
-
             sugerencia = T_Sugerencias(
                 ID_DIAGNOSTICO = diagnostico,
                 ID_MEDICO = med,
                 descripcion = data["descripcion"]                
             )
+
             sugerencia.save()
             return HttpResponse("Sugerencia agregada")
         except:
@@ -677,19 +848,15 @@ def nuevaSugerencia(request):
 def getSugerencia(request, id):
     if request.method == 'GET':
         try: 
-            
-            sug = T_Sugerencias.objects.filter(ID_SUGERENCIAS = id).first()
-            #persona = Persona.objects.filter()
-            #paciente = Paciente.objects.filter(Persona_ID_PERSONA = persona.ID_PERSONA).first()
-
-            if(not sug):
+            sugerencia = T_Sugerencias.objects.filter(ID_SUGERENCIAS = id).first()
+            if(not sugerencia):
                 return HttpResponseBadRequest("No existe una sugerencia con esa numeración")
             
             data = {
                 "Id_Sugerencia": id,
-                "Id_Medico": sug.ID_MEDICO.ID_PERSONA.Nombre,
-                "Sugerencia": str(sug.descripcion),
-                "Fecha_hora": str(sug.fecha_hora)
+                "Nombre_Medico": sugerencia.ID_MEDICO.ID_PERSONA.Nombre,
+                "Sugerencia": str(sugerencia.descripcion),
+                "Fecha_hora": str(sugerencia.fecha_hora)
             }
 
             resp = HttpResponse()
@@ -701,29 +868,52 @@ def getSugerencia(request, id):
     else:
         return HttpResponseNotAllowed(['GET'], "Método inválido")
 
-def getAllSugerencias(request):
+def getAllSugerencias(request, id_diagnostico):
     if request.method == 'GET':
         try:
-            sugerencias = T_Sugerencias.objects.all()
+            sugerencias = T_Sugerencias.objects.filter(ID_DIAGNOSTICO = id_diagnostico)
             if(not sugerencias):
                 return HttpResponseBadRequest("No existen sugerencias")
             
             allSugerencias = []
             for sug in sugerencias:
-                #data = serializers.serialize('json', [diag,])
-
                 data = {
                    "Id_Sugerencia": sug.ID_SUGERENCIAS,
                    "Id_Diagnostico": sug.ID_DIAGNOSTICO.ID_DIAGNOSTICO,
+                   "Id_Paciente" : sug.ID_DIAGNOSTICO.ID_PACIENTE.Persona_ID_PERSONA.Identificacion,
                    "Nombre_Medico": sug.ID_MEDICO.ID_PERSONA.Nombre,
                    "Sugerencia": str(sug.descripcion),
                    "Fecha_hora": str(sug.fecha_hora)
                 }
                 allSugerencias.append(data)
-            #return HttpResponse(allSugerencias)
 
             return HttpResponse(allSugerencias, content_type = "text/json")
         except:
             return HttpResponseServerError("Error de servidor")
     else:
         return HttpResponseNotAllowed(['GET'], "Método inválido")
+
+
+
+def verificarInfoNuevo(data):
+    
+    #evaluar si hay solo letras en nombres y apellidos
+    if (re.search('[0-9]',data["Nombre"])):
+        return "Nombre incorrecto"
+
+    if (re.search('[0-9]',data["Apellido"])):
+        return "Apellido incorrecto"
+
+    #evaluar si hay numeros en el telefono
+    if (re.search('[a-zA-Z]',data["Telefono"])):
+        return "Telefono incorrecto"
+
+    #evaluar si correo electronico tiene el @
+    if (not re.search('@',data["Email"])):
+        return "correo electronico incorrecto"
+    
+    persona = Persona.objects.filter(Identificacion = data["Identificacion"]).first()
+    if(persona):
+        return "Ya existe un usuario con ese documento"
+    
+    return "verificado"
