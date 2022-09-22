@@ -94,11 +94,13 @@ def login(request):
     if request.method == 'POST':
         try:
             data = json.loads(request.body)
+
             rol = data['ID_ROL']
             identificacion = data['Identificacion']
-            password = data['password']
+            password = data['Password']
 
-            usuario = Usuarios.objects.filter(ID_LOGIN = identificacion, password = password, Rol = rol).first()
+            usuario = Usuarios.objects.filter(ID_LOGIN = data['Identificacion'], Password = data['Password'], ID_ROL = data['ID_ROL']).first()
+            print(usuario)
             if(not usuario):
                 return HttpResponse("No existe Usuario", status = 401)
 
@@ -226,11 +228,31 @@ def nuevoPaciente(request):
             #seccion para validacion de existencia de registros en tablas foraneas
             if(verificarInfoNuevo(data) != "verificado"):
                 return HttpResponseBadRequest(verificarInfoNuevo(data))
+            
+            med = Usuarios.objects.filter(ID_LOGIN = data["Medico_ID_MEDICO"], ID_ROL = 1).first()
+            if(not med and (data["Medico_ID_MEDICO"] != None)):
+                return HttpResponseBadRequest('No existe medico con esa Identificacion')
+            elif(med):
+                medi = Persona.objects.filter(Identificacion = med.ID_LOGIN).first()
+                medico = Medico.objects.filter(ID_PERSONA = medi.ID_PERSONA).first()
+            else:
+                medico = None
+
+            fam = Usuarios.objects.filter(ID_LOGIN = data["Familiar_ID_FAMILIAR"], ID_ROL = 4).first()
+            if(not fam and (data["Familiar_ID_FAMILIAR"] != None)):
+                return HttpResponseBadRequest('No existe familiar con esa Identificacion')
+            elif(fam):
+                fami = Persona.objects.filter(Identificacion = fam.ID_LOGIN).first()
+                familiar = Familiar.objects.filter(ID_PERSONA = fami.ID_PERSONA).first()
+            else:
+                familiar = None
+            
+            rol = Rol.objects.filter(Rol = "Paciente").first()
 
             #instancia de la clase
             usuario = Usuarios(
                 ID_LOGIN = data["Identificacion"],
-                ID_ROL = 3,
+                ID_ROL = rol,
                 Password = data["Password"]
             )
 
@@ -245,8 +267,8 @@ def nuevoPaciente(request):
             
             paciente = Paciente(
                 Persona_ID_PERSONA = persona,
-                Medico_ID_MEDICO = data["Medico_ID_MEDICO"],
-                Familiar_ID_FAMILIAR = data["Familiar_ID_FAMILIAR"],
+                Medico_ID_MEDICO = None if(data["Medico_ID_MEDICO"] == None) else medico,
+                Familiar_ID_FAMILIAR = None if(data["Familiar_ID_FAMILIAR"] == None) else familiar,
                 Direccion = data["Direccion"],
                 Ciudad = data["Ciudad"],
                 Latitud = data["Latitud"],
@@ -406,14 +428,18 @@ def nuevoMedico(request):
                 return HttpResponseBadRequest(verificarInfoNuevo(data))
 
             #seccion para validacion de existencia de especialidad valida
-            especialidad = Especialidad.objects.filter(ID_ESPECIALIDAD = data["Id_especialidad"]).first()
+            especialidad = Especialidad.objects.filter(ID_ESPECIALIDAD = data["ID_ESPECIALIDAD"]).first()
             if(not especialidad):
                 return HttpResponseBadRequest("No existe la especialidad indicada")
+
+            rol = Rol.objects.filter(Rol = "Médico").first()
+
+            print(rol.ID_ROL)
 
             #instancia de la clase
             usuario = Usuarios(
                 ID_LOGIN = data["Identificacion"],
-                ID_ROL = 1,
+                ID_ROL = rol,
                 Password = data["Password"]
             )
 
@@ -481,11 +507,13 @@ def nuevoFamiliar(request):
             #seccion para validacion de existencia de registros en tablas foraneas
             if(verificarInfoNuevo(data) != "verificado"):
                 return HttpResponseBadRequest(verificarInfoNuevo(data))
+            
+            rol = Rol.objects.filter(Rol = "Familiar").first()
 
             #instancia de la clase
             usuario = Usuarios(
                 ID_LOGIN = data["Identificacion"],
-                ID_ROL = 4,
+                ID_ROL = rol,
                 Password = data["Password"]
             )
 
@@ -551,11 +579,13 @@ def nuevoAuxiliar(request):
             #seccion para validacion de existencia de registros en tablas foraneas
             if(verificarInfoNuevo(data) != "verificado"):
                 return HttpResponseBadRequest(verificarInfoNuevo(data))
+            
+            rol = Rol.objects.filter(Rol = "Auxiliar").first()
 
             #instancia de la clase
             usuario = Usuarios(
                 ID_LOGIN = data["Identificacion"],
-                ID_ROL = 2,
+                ID_ROL = rol,
                 Password = data["Password"]
             )
 
@@ -619,11 +649,13 @@ def nuevoEnfermero(request):
             #seccion para validacion de existencia de registros en tablas foraneas
             if(verificarInfoNuevo(data) != "verificado"):
                 return HttpResponseBadRequest(verificarInfoNuevo(data))
+            
+            rol = Rol.objects.filter(Rol = "Enfermero").first()
 
             #instancia de la clase
             usuario = Usuarios(
                 ID_LOGIN = data["Identificacion"],
-                ID_ROL = 5,
+                ID_ROL = rol,
                 Password = data["Password"]
             )
 
@@ -892,8 +924,6 @@ def getAllSugerencias(request, id_diagnostico):
             return HttpResponseServerError("Error de servidor")
     else:
         return HttpResponseNotAllowed(['GET'], "Método inválido")
-
-
 
 def verificarInfoNuevo(data):
     

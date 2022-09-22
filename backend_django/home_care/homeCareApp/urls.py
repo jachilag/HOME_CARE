@@ -9,7 +9,7 @@ urlpatterns = [
     path('nuevoRol', views.nuevoRol, name='nuevoRol'),
     path('getRol/<int:id>', views.getRol, name='getRol'),
 
-    path('login/<int:id>', views.login, name='login'),
+    path('login', views.login, name='login'),
 
     path('nuevoPersona', views.nuevoPersona, name='nuevoPersona'),
     path('getPersona/<int:id>', views.getPersona, name='getPersona'),

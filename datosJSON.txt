@@ -22,26 +22,13 @@ http://127.0.0.1:8000/getRol/<numEntero>
 #consultar Usuario
 http://127.0.0.1:8000/getUsuario/<numEntero>
 
-
-
-#agregar Persona
-# ya no se generara una persona desde este punto sino desde su entidad directamente
-{
-    "ID_ROL" : 6,
-    "Password" : "hola123456",
-    "Identificacion" : -1,
-    "Nombre" : "Administrador",
-    "Apellido" : "Administrador",
-    "Telefono" : "320000",
-    "Genero" : "No_binario",
-    "Email" : "Administrador@gmail.com"
-}
-
 #consultar Persona
 http://127.0.0.1:8000/getRol/<numEntero>
 
 
-#agregar Paciente
+# agregar Paciente
+POST
+http://127.0.0.1:8000/nuevoPaciente
 {
     "Identificacion" : -1,
     "Password" : "hola123456",
@@ -56,7 +43,7 @@ http://127.0.0.1:8000/getRol/<numEntero>
     "Ciudad" : "Bogota",
     "Latitud" : 4.576,
     "Longitud" : -74.12,
-    "Fecha_Nacimiento" : "01-03-1991"
+    "Fecha_Nacimiento" : "1991-03-01"
 }
 
 #consultar pacientes
@@ -65,15 +52,17 @@ http://127.0.0.1:8000/getAllPatients
 
 
 
-#agregar Medico
+# agregar Medico
+POST
+http://127.0.0.1:8000/nuevoMedico
 {
-    "Identificacion" : -1,
+    "Identificacion" : 963852,
     "Password" : "hola123456",
-    "Nombre" : "Administrador",
-    "Apellido" : "Administrador",
-    "Telefono" : "320000",
-    "Genero" : "No_binario",
-    "Email" : "Administrador@gmail.com",
+    "Nombre" : "medicoOne",
+    "Apellido" : "medLastName",
+    "Telefono" : "321654",
+    "Genero" : "Femenino",
+    "Email" : "medico1@gmail.com",
     "ID_ESPECIALIDAD" : 1,
     "Registro" : "abcd123456"
 }
@@ -83,16 +72,18 @@ http://127.0.0.1:8000/getAllPatients
     "especialidad" : "Pediatria"
 }
 
-#agregar familiar
+# agregar familiar
+POST
+http://127.0.0.1:8000/nuevoFamiliar
 {
-    "Identificacion" : -1,
+    "Identificacion" : 147258,
     "Password" : "hola123456",
-    "Nombre" : "Administrador",
-    "Apellido" : "Administrador",
-    "Telefono" : "320000",
-    "Genero" : "No_binario",
-    "Email" : "Administrador@gmail.com",
-    "parentesco" : "tio"
+    "Nombre" : "FamiliarOne",
+    "Apellido" : "FamiliarOne",
+    "Telefono" : "321987456",
+    "Genero" : "Masculino",
+    "Email" : "FamiliarOne@gmail.com",
+    "parentesco" : "Hermano"
 }
 
 #New data Register_SV
@@ -103,6 +94,8 @@ http://127.0.0.1:8000/getAllPatients
 }
 
 #login consulta de usuario y contraseña
+POST
+http://127.0.0.1:8000/login
 {
     "ID_ROL": 4,
     "Identificacion" : -1,
