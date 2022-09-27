@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link  rel = "stylesheet" href = "css/login.css" type = "text/css"/>
+    <meta charset="UTF-8">
+    <title>Log In</title>
+</head>
+<body>
+    <div class="login_box">
+        <div class = "login_title" >
+            <h1> Bienvenido a HOME CARE </h1>
+        </div>
+
+        <div class = "box_form"> 
+            <div class = "data_box" name = "rol_selector">
+                <h3 class = "box_title"> Tipo de usuario </h3>
+                <select id="role_list">
+                    <option value = "Paciente">Paciente</option>
+                    <option value = "Familiar">Familiar</option>
+                    <option value = "Medico">Medico</option>
+                    <option value = "Enfermero">Enfermero</option>
+                    <option value = "Familiar">Familiar</option>
+                    <option value = "Auxiliar">Auxiliar</option>
+                </select>
+            </div>
+            <div class = "data_box" id = "id_user" >
+                <h3 class = "box_title"> Identificacion </h3>
+                <input type="text" class = "text_data" id="id_user_txt">
+            </div>            
+            <div class = "data_box" id = "password" >
+                <h3 class = "box_title" > Contraseña </h3>
+                <input type="text" class = "text_data" id="id_user_txt">
+
+                <label><input type="checkbox" id="chk_box_pass" value="first_checkbox"> Mostrar contraseña </label><br>
+            </div>
+
+            <button class = "btn" id = "login_btn"> INGRESAR </button>
+            <div id = "hyper_pass_forger">
+                <a class = "hyper" id ="pass_forget" href="http://www.emezeta.com/"> ¿Olvido su contraseña?</a>
+            </div>    
+        </div>
+
+    </div>
+</body>
+</html>       
