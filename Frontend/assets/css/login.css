@@ -1,0 +1,181 @@
+:root {
+    --rojo: #fff;
+    --rojoOscuro: #050C42;
+    --rojoNormal: #0284A8;
+    --rojoClarito: #02BEC4;
+    --blanco: #000;
+    --fuente: 'Poppins', sans-serif;
+}
+
+html {
+    box-sizing: border-box;
+}
+
+*,
+*::after,
+*::before {
+    box-sizing: inherit;
+}
+
+body {
+    font-family: var(--fuente);
+    background-image: url(../img/login.png);
+    display: flex;    
+    align-items: center;
+    height: 100vh;
+}
+
+#Bienvenida{
+    margin-top: 5%; 
+    font-family: var(--fuente);
+    text-align: center;
+    font-weight: bold;
+    color: var(--rojoOscuro);
+}
+.contenedor {
+    margin: auto auto;
+    height: 95%;
+    width: 95%;
+}
+
+.imagen-formulario {
+    background-position: center center;
+    background-size: cover;
+    height: 200px;
+    flex: 0 0 calc(60%);
+    position: relative;
+}
+
+.imagen-formulario::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+}
+
+@media(min-width: 768px) {
+    .imagen-formulario {
+        height: auto;
+        background-position: right;
+    }
+}
+
+@media(min-width:1200px) {
+    .imagen-formulario {
+        background-position: center;
+    }
+}
+
+@media(min-width: 768px) {
+    .contenedor-formulario {
+        display: flex;
+    }
+}
+
+.formulario {
+    padding: 20px;
+}
+
+
+.texto-formulario h2,
+.input label,
+.password-olvidada a {
+    color: var(--blanco);
+}
+
+.texto-formulario h2 {
+    font-size: 72px;
+    text-align: center;
+}
+
+.texto-formulario p {
+    font-size: 32px;
+    text-align: center;
+}
+
+.input label {
+    display: block;
+    font-size: 30px;
+    font-weight: bold;
+    margin: 20px 0;
+    color: var(--rojoOscuro);
+}
+
+.input input {
+    width: 100%;
+    font-size: 30px;
+    padding: 10px 16px;
+    border-radius: 10px;
+    outline: none;
+}
+
+#ingresar {
+    padding: 10px 16px;
+    border-radius: 10px;
+    outline: none;
+    -webkit-box-shadow: 16px 15px 17px -7px rgba(138, 138, 138, 1);
+    -moz-box-shadow: 16px 15px 17px -7px rgba(138, 138, 138, 1);
+    box-shadow: 16px 15px 17px -7px rgba(138, 138, 138, 1);
+}
+
+#ingresar{
+    background-color: var(--rojoOscuro);
+    color: white;
+    font-size: 35px;
+    font-weight: bold;
+    border: none;
+    transition: background-color .3s ease-in-out;
+}
+
+#ingresar:hover {
+    cursor: pointer;
+    background-color: var(--rojoClarito);
+}
+
+button {
+    padding: 10px 16px;
+    border-radius: 10px;
+    outline: none;
+    -webkit-box-shadow: 16px 15px 17px -7px rgba(138, 138, 138, 1);
+    -moz-box-shadow: 16px 15px 17px -7px rgba(138, 138, 138, 1);
+    box-shadow: 16px 15px 17px -7px rgba(138, 138, 138, 1);
+}
+
+button{
+    background-color: var(--rojoOscuro);
+    color: white;
+    font-size: 35px;
+    font-weight: bold;
+    border: none;
+    transition: background-color .3s ease-in-out;
+}
+
+button:hover {
+    cursor: pointer;
+    background-color: var(--rojoClarito);
+}
+
+
+
+#show_password{
+    padding: 10px 16px;
+    border-radius: 10px;
+    outline: none;
+    -webkit-box-shadow: 16px 15px 17px -7px rgba(138, 138, 138, 1);
+    -moz-box-shadow: 16px 15px 17px -7px rgba(138, 138, 138, 1);
+    box-shadow: 16px 15px 17px -7px rgba(138, 138, 138, 1);
+    background-color:var(--rojoOscuro);
+    color: white;
+    font-size: 22px;
+    font-weight: bold;
+    border: none;
+    transition: background-color .3s ease-in-out;
+}
+
+#show_password:hover {
+    cursor: pointer;
+    background-color: var(--rojoNormal);
+}
