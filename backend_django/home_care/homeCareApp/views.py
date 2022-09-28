@@ -157,45 +157,6 @@ def deleteUser(request, id):
     else:
         return HttpResponseNotAllowed(['DELETE'], "Método inválido")
 
-def nuevoPersona(request):
-    if request.method == 'POST':
-        try:
-            data = json.loads(request.body)
-
-            #seccion para validacion de existencia de registros en tablas foraneas
-            rol = Rol.objects.filter(ID_ROL = data["ID_ROL"]).first()
-            if(not rol):
-                return HttpResponseBadRequest("No existe Rol")
-            
-            #evaluar si hay solo letras en nombres y apellidos, correo y telefono
-            validacion = validarDatosPersona(data)
-            if(validacion != "validados"):
-                return HttpResponseBadRequest(validacion)
-
-            #instancia de la clase
-            usuario = Usuarios(
-                ID_LOGIN = data["Identificacion"],
-                ID_ROL = rol,
-                Password = data["Password"]
-            )
-
-            persona = Persona(
-                Identificacion = usuario,
-                Nombre = data["Nombre"],
-                Apellido = data["Apellido"],
-                Telefono = data["Telefono"],
-                Genero = data["Genero"],
-                Email = data["Email"]
-            )
-
-            usuario.save()
-            persona.save()
-            return HttpResponse("Persona agregada")
-        except:
-            return HttpResponseBadRequest("Error en los datos recibidos")
-    else:
-        return HttpResponseNotAllowed(['POST'], "Método inválido")
-
 def getPersona(request, id):
     if request.method == 'GET':
         try:
@@ -280,7 +241,12 @@ def nuevoPaciente(request):
                 return HttpResponseBadRequest(verificarInfoNuevo(data))
             
             medico = asignacionMedico(data)
+            if (medico == 'No existe'):
+                return HttpResponseBadRequest('No existe Medico con esa Identificacion')
+
             familiar = asignacionFamiliar(data)
+            if (familiar == 'No existe'):
+                return HttpResponseBadRequest('No existe Familiar con esa Identificacion')
             
             rol = Rol.objects.filter(Rol = "Paciente").first()
 

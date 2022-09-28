@@ -14,7 +14,6 @@ urlpatterns = [
     path('login', views.login, name='login'),
     path('deleteUser/<int:id>', views.deleteUser, name='deleteUser'), 
 
-    path('nuevoPersona', views.nuevoPersona, name='nuevoPersona'),
     path('getPersona/<int:id>', views.getPersona, name='getPersona'),
     path('getPersonas', views.getPersonas, name='getPersonas'),
     path('deletePersona/<int:id>', views.deletePersona, name='deletePersona'), 
