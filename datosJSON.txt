@@ -1,31 +1,8 @@
 #este archivo sirve para copiar y pegar en postman para realizar pruebas de 
 #ingreso de datos y consulta de datos de la BD
 
-# agregar signo vital
-{
-    "signo_vital" : "Oximetria"
-}
 
-#consultar signo vital
-http://127.0.0.1:8000/getSignoVital/<numEntero>
-
-
-# agregar Rol
-{
-    "Rol" : "Médico"
-}
-
-#consultar Rol
-http://127.0.0.1:8000/getRol/<numEntero>
-
-
-#consultar Usuario
-http://127.0.0.1:8000/getUsuario/<numEntero>
-
-#consultar Persona
-http://127.0.0.1:8000/getRol/<numEntero>
-
-
+#=============================== PACIENTE ===============================
 # agregar Paciente
 POST
 http://127.0.0.1:8000/nuevoPaciente
@@ -46,12 +23,49 @@ http://127.0.0.1:8000/nuevoPaciente
     "Fecha_Nacimiento" : "1991-03-01"
 }
 
+# actualizar datos paciente desde el perfil del paciente:
+'PUT'
+http://127.0.0.1:8000/updatePaciente/<id>
+{
+    "Password" : "hola123456",
+    "Telefono" : "320000",
+    "Email" : "Administrador@gmail.com",
+    "Direccion" : "kr 60 x cl 60",
+    "Ciudad" : "Bogota",
+    "Latitud" : 4.666,
+    "Longitud" : -74.66
+}
+
+# asignar familiar a paciente por parte del AUXILIAR
+'PUT'
+http://127.0.0.1:8000/updatePaciente_Familiar/<id>
+{
+    "Familiar_ID_FAMILIAR" : 147258
+}
+
+# asignar medico a paciente por parte del AUXILIAR
+'PUT'
+http://127.0.0.1:8000/updatePaciente_Medico/<id>
+{
+    "Medico_ID_MEDICO" : 123
+}
+
+#=============================== SIGNO VITAL ===============================
+# registro de un signo vital Register_SV
+http://127.0.0.1:8000/nuevoRegistro_SV
+{
+    "SV_ID_SIGNO_VITAL" : 4,
+    "Identificacion" : 258,
+    "Medida" : 20.000
+}
+
 #consultar pacientes
 http://127.0.0.1:8000/getPaciente/<numEntero>
 http://127.0.0.1:8000/getAllPatients
 
 
 
+#=============================== MEDICO ===============================
 # agregar Medico
 POST
 http://127.0.0.1:8000/nuevoMedico
@@ -67,11 +81,26 @@ http://127.0.0.1:8000/nuevoMedico
     "Registro" : "abcd123456"
 }
 
+#lista de MIS PACIENTES
+GET
+http://127.0.0.1:8000/getMisPacientes/<identificacion medico>
+
+# actualizar datos medico
+'PUT'
+http://127.0.0.1:8000/updateMedico/<id>
+{
+    "Password" : "hola123456",
+    "Telefono" : "321654",
+    "Email" : "medico1@gmail.com"
+}
+
 #agregar especialidad
 {
     "especialidad" : "Pediatria"
 }
 
+
+#=============================== FAMILIAR ===============================
 # agregar familiar
 POST
 http://127.0.0.1:8000/nuevoFamiliar
@@ -86,12 +115,46 @@ http://127.0.0.1:8000/nuevoFamiliar
     "parentesco" : "Hermano"
 }
 
-#New data Register_SV
+# actualizar datos familiar
+'PUT'
+http://127.0.0.1:8000/updateFamiliar/<id>
 {
-    "SV_ID_SIGNO_VITAL" : 4,
-    "Paciente_ID_PACIENTE" : 4,
-    "Medida" : 35.000
+    "Password" : "hola123456",
+    "Telefono" : "321987456",
+    "Email" : "FamiliarOne@gmail.com"
 }
+
+
+
+#=============================== AUXILIAR ===============================
+
+
+
+
+
+
+# agregar signo vital
+{
+    "signo_vital" : "Oximetria"
+}
+
+#consultar signo vital
+http://127.0.0.1:8000/getSignoVital/<numEntero>
+
+
+# agregar Rol
+{
+    "Rol" : "Médico"
+}
+
+#=============================== ENFERMERO ===============================
+
+
+
+
+
+
+#=============================== LOGIN ===============================
 
 #login consulta de usuario y contraseña
 POST

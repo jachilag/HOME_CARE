@@ -65,7 +65,7 @@ class Registro_SV(models.Model):
     SV_ID_SIGNO_VITAL = models.ForeignKey(Signos_vitales, on_delete = models.CASCADE)
     Paciente_ID_PACIENTE = models.ForeignKey(Paciente, on_delete = models.CASCADE)
     Medida = models.DecimalField(max_digits = 6, decimal_places = 3)
-    Fecha_Hora = models.DateTimeField(default = timezone.now, blank = False)
+    Fecha_Hora = models.DateTimeField(blank = False)
 
 class T_Diagnostico(models.Model):
     ID_DIAGNOSTICO = models.BigAutoField(primary_key=True)
