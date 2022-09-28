@@ -731,11 +731,13 @@ def getMisPacientes(request, id):
 
             medico = Medico.objects.filter(ID_PERSONA = persona.ID_PERSONA).first()
             if(not medico):
-                return HttpResponseBadRequest("No existe un medicocon ese documento")
+                return HttpResponseBadRequest("No existe un medico con ese documento")
+            
 
             pacientes = Paciente.objects.filter(Medico_ID_MEDICO = medico.ID_MEDICO)
             if (not pacientes):
                 return HttpResponseBadRequest("No tiene Pacientes asignados ")
+            print(pacientes)
             
             allPatients = []
             for pat in pacientes:
@@ -745,7 +747,7 @@ def getMisPacientes(request, id):
                     "Apellido" : pat.Persona_ID_PERSONA.Apellido,
                     "Genero" : pat.Persona_ID_PERSONA.Genero,
                     "Telefono" : pat.Persona_ID_PERSONA.Telefono,
-                    "Fecha_Nacimiento" : pat.Fecha_Nacimiento,
+                    "Fecha_Nacimiento" : str(pat.Fecha_Nacimiento),
                 }
                 allPatients.append(data)
 
