@@ -9,6 +9,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
     <title>Asesor</title>
     <link rel="stylesheet" href="assets/css/estilos.css">
+    <link rel="stylesheet" href="assets/css/estilomodal.css">
+
 </head>
 
 <body>
@@ -30,55 +32,284 @@
                 <form action="" class="formulario__consulta">
                     <h3>Consultar usuario</h3>
                     <input placeholder="Identificación" type="text" id="Identificacion" name="Identificacion">
-                    <button > Consultar</button>
+                    <button> Consultar</button>
                 </form>
                 <!--Registrar-->
                 <form action="" class="formulario__register">
                     <h2>Registrar</h2>
                     <button id="btn" type="button" class="btn btn-primary" data-bs-toggle="modal"
-                        data-bs-target="#exampleModal">
-                        Rol
+                        data-bs-target="#Medico">
+                        Medico
                     </button>
                     <br>
                     <button id="btn" type="button" class="btn btn-primary" data-bs-toggle="modal"
-                        data-bs-target="#myModal1">
+                        data-bs-target="#Paciente">
                         Paciente
                     </button>
                     <br>
                     <button id="btn" type="button" class="btn btn-primary" data-bs-toggle="modal"
-                        data-bs-target="#myModal1">
-                        Medico
+                        data-bs-target="#Familiar">
+                        Familiar
                     </button>
                 </form>
             </div>
         </div>
     </main>
-    
-  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Crear Rol</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <table>
-                    <tr>
-                        <td>Nombre del rol</td>
-                        <td><input type="text" id="Rol" placeholder="escriba aqui" required="required"></td>
-                    </tr>
-                    <tr>
-                    </tr>
-                </table>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" onclick="create()">Crear</button>
+
+    <!-- The Modal Medico -->
+    <div class="modal" id="Medico">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Registrar medico</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="contenedor">
+                        <div class="wrapper animated bounceInLeft">
+                            <div class="contacto">
+                                <form class="formulario">
+                                    <p>
+                                        <label>Cedula</label>
+                                        <input type="text" name="identificacion" required>
+                                    </p>
+                                    <p>
+                                        <label>Contraseña</label>
+                                        <input type="text" name="password" required>
+                                    </p>
+                                    <p>
+                                        <label>Nombre(s)</label>
+                                        <input type="text" name="Nombre" required>
+                                    </p>
+                                    <p>
+                                        <label>Apellido(s)</label>
+                                        <input type="text" name="Apellido" required>
+                                    </p>
+                                    <p>
+                                        <label for="Genero">Genero:</label>
+                                        <select style="padding: 15px" class="form-control" id="Genero">
+                                            <option value="#">Seleccionar</option>
+                                            <option value="Masculino">Masculino</option>
+                                            <option value="Femenino">Femenino</option>
+                                        </select>
+
+                                    </p>
+                                    <p>
+                                        <label>Correo electrónico</label>
+                                        <input type="email" name="email" required>
+                                    </p>
+                                    <p>
+                                        <label>Teléfono</label>
+                                        <input type="text" name="telefono" required>
+                                    </p>
+                                    <p>
+                                        <label>Registro</label>
+                                        <input type="text" name="registro" required>
+                                    </p>
+                                    <p>
+                                        <label for="Genero">Especialidad:</label>
+                                        <select style="padding: 15px" class="form-control" id="Genero">
+                                            <option value="#">Seleccionar</option>
+                                            <option value="Pediatria">Pediatria</option>
+                                            <option value="Medicogeneral">Medico general</option>
+                                            <option value="Otologia">Otología</option>
+                                        </select>
+
+                                    </p>
+                                    <br>
+                                    <p>
+                                        <button style="margin-left: 50%" class="boton-enviar">Enviar</button>
+                                    </p>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                </div>
+
             </div>
         </div>
     </div>
-</div>
-<script src="assets/js/styleasesor.js"></script>
+
+    <!-- The Modal Paciente -->
+    <div class="modal" id="Paciente">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Registrar Paciente</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="contenedor">
+                        <div class="wrapper animated bounceInLeft">
+                            <div class="contacto">
+                                <form class="formulario">
+                                    <p>
+                                        <label>Cedula</label>
+                                        <input type="text" name="identificacion" required>
+                                    </p>
+                                    <p>
+                                        <label>Contraseña</label>
+                                        <input type="text" name="password" required>
+                                    </p>
+                                    <p>
+                                        <label>Nombre(s)</label>
+                                        <input type="text" name="Nombre" required>
+                                    </p>
+                                    <p>
+                                        <label>Apellido(s)</label>
+                                        <input type="text" name="Apellido" required>
+                                    </p>
+                                    <p>
+                                        <label for="Genero">Genero:</label>
+                                        <select style="padding: 15px" class="form-control" id="Genero">
+                                            <option value="#">Seleccionar</option>
+                                            <option value="Masculino">Masculino</option>
+                                            <option value="Femenino">Femenino</option>
+                                            <option value="Femenino">No binario</option>
+                                        </select>
+
+                                    </p>
+                                    <p>
+                                        <label>Correo electrónico</label>
+                                        <input type="email" name="email" required>
+                                    </p>
+                                    <p>
+                                        <label>Teléfono</label>
+                                        <input type="text" name="telefono" required>
+                                    </p>
+                                    <p>
+                                        <label>Fecha de nacimiento</label>
+                                        <input type="date" name="fechanacimiento" required>
+                                    </p>
+                                    <p>
+                                        <label>Dirección</label>
+                                        <input type="text" name="direccion" required>
+                                    </p>
+                                    <p>
+                                        <label>Ciudad</label>
+                                        <input type="text" name="ciudad" required>
+                                    </p>
+                                    <p>
+                                        <label>Longitud</label>
+                                        <input type="text" name="longitud" required>
+                                    </p>
+                                    <p>
+                                        <label>Latitud</label>
+                                        <input type="text" name="latitud" required>
+                                    </p>
+                                    <p>
+                                        <label for="Genero">Familiar:</label>
+                                        <input type="search" name="Familiar" required>
+                                    </p>
+                                    <p>
+                                        <label for="Genero">Medico:</label>
+                                        <input type="search" name="Medico" required>
+                                    </p>
+                                    <p>
+                                        <button style="margin-left: 50%" class="boton-enviar">Enviar</button>
+                                    </p>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- The Modal Familiar -->
+    <div class="modal" id="Familiar">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Registrar Familiar</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="contenedor">
+                        <div class="wrapper animated bounceInLeft">
+                            <div class="contacto">
+                                <form class="formulario">
+                                    <p>
+                                        <label>Cédula</label>
+                                        <input type="text" name="identificacion" required>
+                                    </p>
+                                    <p>
+                                        <label>Contraseña</label>
+                                        <input type="text" name="password" required>
+                                    </p>
+                                    <p>
+                                        <label>Nombre(s)</label>
+                                        <input type="text" name="Nombre" required>
+                                    </p>
+                                    <p>
+                                        <label>Apellido(s)</label>
+                                        <input type="text" name="Apellido" required>
+                                    </p>
+                                    <p>
+                                        <label for="Genero">Genero:</label>
+                                        <select style="padding: 15px" class="form-control" id="Genero">
+                                            <option value="#">Seleccionar</option>
+                                            <option value="Masculino">Masculino</option>
+                                            <option value="Femenino">Femenino</option>
+                                        </select>
+
+                                    </p>
+                                    <p class="full">
+                                        <label>Correo electrónico</label>
+                                        <input type="email" name="email" required>
+                                    </p>
+                                    <p>
+                                        <label>Teléfono</label>
+                                        <input type="number" name="telefono" required>
+                                    </p>
+                                    <p>
+                                        <label>Parentesco</label>
+                                        <input type="text" name="registro" required>
+                                    </p>
+                                    <p>
+                                        <button style="margin-left: 50%" class="boton-enviar">Enviar</button>
+                                    </p>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <script src="assets/js/styleasesor.js"></script>
 </body>
 
 </html>
