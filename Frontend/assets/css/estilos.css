@@ -78,6 +78,8 @@ main {
     position: relative;
     top: -165px;
     left: 10px;
+
+    transition: left 500ms cubic-bezier(0.175,0.885,0.320,1.275);
 }
 
 /*Formularios*/
@@ -114,4 +116,59 @@ main {
     height: 50px;
     cursor: pointer;
     outline: none;
+    color: #fff;
+}
+
+.formulario__consulta{
+    opacity: 1;
+    display: block;
+}
+.formulario__register{
+    display: none;
+}
+.contenedor__consulta-register form button  {
+    padding: 10px 40px;
+    margin-top: 40px;
+    border: none;
+    font-size: 14px;
+    background: #050C42;
+    color: white;
+    cursor: pointer;
+    outline: none;
+}
+
+.formulario__consulta{
+    opacity: 1;
+    display: block;
+}
+.formulario__register{
+    display: none;
+}
+
+/*Resposive asesor*/
+
+@media screen and (max-width: 850px) {
+    main{
+        margin-top:50px;
+    }
+    .caja__trasera{
+        max-width: 350px;
+        height: 300px;
+        flex-direction: column;
+        margin:auto;
+    }
+    .caja__trasera div{
+        margin: 0px;
+        position: absolute;
+    }
+
+    /*formulario*/
+    .contenedor__consulta-register{
+        top: -10px;
+        left: -10px;
+        margin: auto;
+    }
+    .contenedor__consulta-register form{
+        position: relative;
+    }
 }
