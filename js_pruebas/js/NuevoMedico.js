@@ -2,9 +2,9 @@
 // const host = 'http://127.0.0.1:8000/';
 const host = 'https://home-care-db-2022-g7.herokuapp.com/';
 
+const newEntUrl = host + 'nuevoMedico';
 const getEspUrl = host + 'getEspecialidades';
-const newMedUrl = host + 'nuevoMedico';
-let Esp = [];
+let especialidad = [];
 
 
 function getEspecialidades() {
@@ -17,34 +17,29 @@ function getEspecialidades() {
             }
         })
         .then(data => {
-            Esp = JSON.parse(data);
-            console.log(Esp);
-            pullEsp();
+            especialidad = JSON.parse(data);
+            console.log(especialidad);
+            pushEspecialidad();
         })
         .catch(err => {
             console.log("Error: " + err);
         });
 }
 
-function pullEsp() {
+function pushEspecialidad() {
     const select = [];
-    console.log(Esp.length);
-    if (Esp.length > 0) {
+    console.log(especialidad.length);
+    if (especialidad.length > 0) {
 
-        Esp.forEach((esp) => {
+        especialidad.forEach((esp) => {
             const option = document.createElement("option");
             option.innerHTML = `<option value='${esp.id}' >${esp.id}- ${esp.Especialidad}</option>`;
             select.push(option);
         });
-        const info = document.getElementById("espe");
+        const info = document.getElementById("especialidad");
         select.forEach(sel => info.appendChild(sel));
     }
 }
-
-
-
-
-
 
 
 function create() {
@@ -55,7 +50,7 @@ function create() {
     var Telefono = document.getElementById("Telefono").value;
     var Genero = document.getElementById("Genero").value;
     var Email = document.getElementById("Email").value;
-    var esp = document.getElementById("espe").value;
+    var esp = document.getElementById("especialidad").value;
     var espe = esp.split('-');
     var Registro = document.getElementById("Registro").value;
 
@@ -87,7 +82,7 @@ function create() {
         const dataToSend = JSON.stringify(data);
         // alert(dataToSend);
 
-        newMed(dataToSend);
+        newEntidad(dataToSend);
     } else {
         alert("Proceso cancelado.");
     }
@@ -102,8 +97,8 @@ function create() {
 // }
 
 // /función para crear la especialidad
-function newMed(data) {
-    fetch(newMedUrl, {
+function newEntidad(data) {
+    fetch(newEntUrl, {
             method: "POST",
             headers: {
                 "Content-Type": "text/json"
