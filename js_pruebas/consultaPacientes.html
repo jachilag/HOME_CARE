@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button onclick="viewOne()">Ver paciente</button>
+    <button onclick="viewAll()">Ver pacientes</button>
+
+    <div id="one">
+
+        <div id="search">
+            <table>
+                <tr>
+                    <td>Ingrese la identificación del paciente</td>
+                    <td><input type="number" id="identificacion" value="258"></td>
+                    <td><button onclick="validate()">Buscar</button></td>
+                </tr>
+            </table>
+        </div>
+
+        <div id="result">
+            <table id="tableind">
+                <tr>
+                    <td>Identificacion</td>
+                    <td><label id="ide"></label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Id Medico</td>
+                    <td><label id="Medico_ID_MEDICO"></label></td>
+                </tr>
+
+                <tr>
+                    <td>Id Familiar</td>
+                    <td><label id="Familiar_ID_FAMILIAR"></label></td>
+                </tr>
+                <tr>
+                    <td>Nombre</td>
+                    <td><label id="Nombre"></label></td>
+                </tr>
+                <tr>
+                    <td>Apellido</td>
+                    <td><label id="Apellido"></label></td>
+                </tr>
+                <tr>
+                    <td>Genero</td>
+                    <td><label id="Genero"></label></td>
+                </tr>
+                <tr>
+                    <td>Telefono</td>
+                    <td><label id="Telefono"></label></td>
+                </tr>
+                <tr>
+                    <td>Fecha_Nacimiento</td>
+                    <td><label id="Fecha_Nacimiento"></label></td>
+                </tr>
+                <tr>
+                    <td>Direccion</td>
+                    <td><label id="Direccion"></label></td>
+                </tr>
+                <tr>
+                    <td>Ciudad</td>
+                    <td><label id="Ciudad"></label></td>
+                </tr>
+                <tr>
+                    <td>Latitud</td>
+                    <td><label id="Latitud"></label></td>
+                </tr>
+                <tr>
+                    <td>Longitud</td>
+                    <td><label id="Longitud"></label></td>
+                </tr>
+
+            </table>
+        </div>
+    </div>
+
+    <div id="all">
+        <table id="tableall">
+            <tr>
+                <td>Identificación</td>
+                <td>Nombre</td>
+                <td>Apellido</td>
+                <td>Telefono</td>
+                <td>Dirección</td>
+            </tr>
+        </table>
+    </div>
+
+    <script src="js/consultaPacientes.js"></script>
+</body>
+
+</html>
