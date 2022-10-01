@@ -10,9 +10,11 @@
 
 <body>
     <table>
+
+        <!-- datos generales de las entidades nuevas -->
         <tr>
             <td><label>Identificacion</label></td>
-            <td><input id="Identificacion" type="text" value="2001"></td>
+            <td><input id="Identificacion" type="text" value="1001"></td>
         </tr>
         <tr>
             <td><label>Contraseña</label></td>
@@ -20,39 +22,67 @@
         </tr>
         <tr>
             <td><label>Nombre</label></td>
-            <td><input id="Nombre" type="text" value="pruebaTwo"></td>
+            <td><input id="Nombre" type="text" value="pacienteTwo"></td>
         </tr>
         <tr>
             <td><label>Apellido</label></td>
-            <td><input id="Apellido" type="text" value="pruebaTwo"></td>
+            <td><input id="Apellido" type="text" value="pacienteTwo"></td>
         </tr>
         <tr>
             <td><label>Telefono</label></td>
-            <td><input id="Telefono" type="text" value="1112233"></td>
+            <td><input id="Telefono" type="number" value="321654"></td>
         </tr>
         <tr>
             <td><label>Genero</label></td>
-            <td><input id="Genero" type="text" value="Masculino"></td>
+            <td>
+                <select id="Genero" type="text">
+                <option value="null">Elija Genero</option>
+                <option value="Masculino">Masculino</option>
+                <option value="Femenino">Femenino</option>
+              </select>
+            </td>
         </tr>
         <tr>
             <td><label>Email</label></td>
-            <td><input id="Email" type="email" value="medico1@gmail.com"></td>
+            <td><input id="Email" type="email" value="paciente1@gmail.com"></td>
+        </tr>
+
+
+        <!-- datos especificos -->
+        <tr>
+            <td><label>ID Medico asignado</label></td>
+            <td><input id="Medico_ID_MEDICO" type="text"></td>
         </tr>
         <tr>
-            <td><label>Especialidad</label></td>
-            <td><select name="ID_ESPECIALIDAD" id="especialidad">
-                <!-- <option value="1"> la especialidad</option> -->
-                </select></td>
+            <td><label>ID Familiar asignado</label></td>
+            <td><input id="Familiar_ID_FAMILIAR" type="text"></td>
         </tr>
         <tr>
-            <td><label>Registro</label></td>
-            <td><input id="Registro" type="text" value="1001"></td>
+            <td><label>Direccion</label></td>
+            <td><input id="Direccion" type="text" value="cr x cl "></td>
         </tr>
+        <tr>
+            <td><label>Ciudad</label></td>
+            <td><input id="Ciudad" type="text" value="Bogotá"></td>
+        </tr>
+        <tr>
+            <td><label>Latitud</label></td>
+            <td><input id="Latitud" type="number" value=5.57></td>
+        </tr>
+        <tr>
+            <td><label>Longitud</label></td>
+            <td><input id="Longitud" type="number" value=-74.12></td>
+        </tr>
+        <tr>
+            <td><label>Fecha nacimiento</label></td>
+            <td><input id="Fecha_Nacimiento" type="date" value="1991-03-01" ></td>
+        </tr>
+        
         <tr>
             <td><button onclick="create()">Crear</button></tr>
     </table>
 
-    <script src="js/NuevoMedico.js"></script>
+    <script src="js/NuevoPaciente.js"></script>
 </body>
 
 </html>

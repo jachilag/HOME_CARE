@@ -4,7 +4,9 @@ const host = 'https://home-care-db-2022-g7.herokuapp.com/';
 
 const newEntUrl = host + 'nuevoMedico';
 const getEspUrl = host + 'getEspecialidades';
+const getUsuUrl = host + 'getPersonas';
 let especialidad = [];
+let usuarios = [];
 
 
 function getEspecialidades() {
@@ -43,60 +45,138 @@ function pushEspecialidad() {
 
 
 function create() {
-    var id = document.getElementById("Identificacion").value;
-    var Password = document.getElementById("Password").value;
-    var Nombre = document.getElementById("Nombre").value;
-    var Apellido = document.getElementById("Apellido").value;
-    var Telefono = document.getElementById("Telefono").value;
-    var Genero = document.getElementById("Genero").value;
-    var Email = document.getElementById("Email").value;
-    var esp = document.getElementById("especialidad").value;
-    var espe = esp.split('-');
-    var Registro = document.getElementById("Registro").value;
+    getUsuarios()
+    setTimeout(function(){
+        var Identificacion = document.getElementById("Identificacion").value.trim();
+        var Password = document.getElementById("Password").value.trim();
+        var Nombre = document.getElementById("Nombre").value.trim();
+        var Apellido = document.getElementById("Apellido").value.trim();
+        var Telefono = document.getElementById("Telefono").value.trim();
+        var Genero = document.getElementById("Genero").value.trim();
+        var Email = document.getElementById("Email").value.trim();
 
-    // alert(`${id}  ${Password}  ${Nombre} ${Apellido} ${Telefono} ${Genero} ${Email} ${espe[0].toString()} ${Registro}`);
+        var esp = document.getElementById("especialidad").value;
+        var espe = esp.split('-');
+        var Registro = document.getElementById("Registro").value.trim();
 
-    // if (id == "" || id == undefined || Password == "" || Password == undefined || nombre == "" || nombre == undefined || Apellido == "" || Apellido == undefined ||
-    //     Telefono == "" || Telefono == undefined) {
+        if(!comprobarInfoBasica(Identificacion,Password,Nombre,Apellido,Telefono,Genero,Email)){
+            return;
+        }
 
-    // }
+        if(!comprobarInfoEspecifica(Registro)){
+            return;
+        }
+        
+        var respuesta = confirm("Está seguro de crear el Medico?")
 
+        if (respuesta) {
+            const data = {
+                "Identificacion": Identificacion,
+                "Password": Password,
+                "Nombre": Nombre,
+                "Apellido": Apellido,
+                "Telefono": Telefono,
+                "Genero": Genero,
+                "Email": Email,
+                "ID_ESPECIALIDAD": parseInt(espe[0]),
+                "Registro": Registro
+            };
+            const dataToSend = JSON.stringify(data);
+            newEntidad(dataToSend);
+        } else {
+            alert("Proceso cancelado.");
+        }
+    }, 600);
 
-    // if (newesp == "" || newesp == undefined) {
-    //     alert("Por favor ingrese un valor");
-    // } else {
-    var respuesta = confirm("Está seguro de crear el Medico?")
-
-    if (respuesta) {
-        const data = {
-            "Identificacion": id,
-            "Password": Password,
-            "Nombre": Nombre,
-            "Apellido": Apellido,
-            "Telefono": Telefono,
-            "Genero": Genero,
-            "Email": Email,
-            "ID_ESPECIALIDAD": parseInt(espe[0]),
-            "Registro": Registro
-        };
-        const dataToSend = JSON.stringify(data);
-        // alert(dataToSend);
-
-        newEntidad(dataToSend);
-    } else {
-        alert("Proceso cancelado.");
-    }
-    // }
 }
 
-// function cambiar() {
-//     var select = document.getElementById("espe"), //El <select>
-//         value = select.value, //El valor seleccionado
-//         text = select.options[select.selectedIndex].innerText; //El texto de la opción seleccionada
-//     alert(`${value}   ${text}`)
-// }
+function comprobarInfoBasica(Identificacion,Password,Nombre,Apellido,Telefono,Genero,Email){
+    
+    if (Identificacion === ""){
+        alert("escriba su Identificacion")
+        return false;
+    }
+    if (getPersona(Number(Identificacion,"Médico", false))){
+        alert("Ya existe Usuario")
+        return false;
+    }
+    if (Identificacion === ""){
+        alert("escriba su Identificacion")
+        return false;
+    }
+    if (Password === ""){
+        alert("escriba su Password")
+        return false;
+    }
+    if (Nombre === ""){
+        alert("escriba su Nombre")
+        return false;
+    }
+    if (Apellido === ""){
+        alert("escriba su Apellido")
+        return false;
+    }
+    if (Telefono === ""){
+        alert("escriba su Telefono")
+        return false;
+    }
+    if (Genero === "null"){
+        alert("Seleccione Genero")
+        return false;
+    }
+    if (Email === ""){
+        alert("escriba su Email")
+        return false;
+    }
 
-// /función para crear la especialidad
+    return true
+}
+
+function comprobarInfoEspecifica(Registro){
+    if (Registro === ""){
+        alert("escriba el Registro profesional")
+        return false;
+    }
+}
+
+function getUsuarios() {
+    fetch(getUsuUrl)
+        .then(response => {
+            if (response.ok) {
+                return response.text()
+            } else {
+                console.log(response.body)
+                throw new Error(response.status)
+            }
+        })
+        .then(data => {
+            usuarios = JSON.parse(data);
+            console.log(usuarios);
+        })
+        .catch(err => {
+            console.log("Error: " + err);
+        });
+}
+
+function getPersona(Identificacion,rol,RolIgual){
+    let salida = false
+
+    usuarios.forEach((usu) => {
+        if(RolIgual){
+            if(usu.Identificacion==Identificacion && rol== usu.Rol ){
+                salida = true
+            }
+        } else{
+            if(usu.Identificacion==Identificacion){
+                salida = true
+            }
+        }
+    });
+
+    console.log(salida)
+    return salida
+}
+// /función para crear un medico
 function newEntidad(data) {
     fetch(newEntUrl, {
             method: "POST",
