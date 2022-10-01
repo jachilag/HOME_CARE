@@ -137,6 +137,7 @@ function comprobarInfoEspecifica(Registro){
         alert("escriba el Registro profesional")
         return false;
     }
+    return true
 }
 
 function getUsuarios() {

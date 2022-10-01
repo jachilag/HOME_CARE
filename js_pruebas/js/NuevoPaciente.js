@@ -138,6 +138,7 @@ function comprobarInfoEspecifica(Medico_ID_MEDICO, Familiar_ID_FAMILIAR, Direcci
         alert("escriba su Fecha de nacimiento")
         return false;
     }
+    return true
 }
 
 function getUsuarios() {
