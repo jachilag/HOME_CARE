@@ -4,7 +4,10 @@ const host = 'https://home-care-db-2022-g7.herokuapp.com/';
 
 const newEntUrl = host + 'nuevoMedico';
 const getEspUrl = host + 'getEspecialidades';
-const getUsuUrl = host + 'getPersonas';
+const getPacUrl = host + 'getPaciente';
+const getMedUrl = host + 'getMedico';
+const getFamUrl = host + 'getFamiliar';
+let usuario = [];
 let especialidad = [];
 let usuarios = [];
 
@@ -43,63 +46,51 @@ function pushEspecialidad() {
     }
 }
 
-
 function create() {
-    getUsuarios()
-    setTimeout(function(){
-        var Identificacion = document.getElementById("Identificacion").value.trim();
-        var Password = document.getElementById("Password").value.trim();
-        var Nombre = document.getElementById("Nombre").value.trim();
-        var Apellido = document.getElementById("Apellido").value.trim();
-        var Telefono = document.getElementById("Telefono").value.trim();
-        var Genero = document.getElementById("Genero").value.trim();
-        var Email = document.getElementById("Email").value.trim();
+    var Identificacion = document.getElementById("Identificacion").value.trim();
+    var Password = document.getElementById("Password").value.trim();
+    var Nombre = document.getElementById("Nombre").value.trim();
+    var Apellido = document.getElementById("Apellido").value.trim();
+    var Telefono = document.getElementById("Telefono").value.trim();
+    var Genero = document.getElementById("Genero").value.trim();
+    var Email = document.getElementById("Email").value.trim();
 
-        var esp = document.getElementById("especialidad").value;
-        var espe = esp.split('-');
-        var Registro = document.getElementById("Registro").value.trim();
+    var esp = document.getElementById("especialidad").value;
+    var espe = esp.split('-');
+    var Registro = document.getElementById("Registro").value.trim();
 
-        if(!comprobarInfoBasica(Identificacion,Password,Nombre,Apellido,Telefono,Genero,Email)){
-            return;
-        }
+    if(!comprobarInfoBasica(Identificacion,Password,Nombre,Apellido,Telefono,Genero,Email)){
+        return;
+    }
 
-        if(!comprobarInfoEspecifica(Registro)){
-            return;
-        }
-        
-        var respuesta = confirm("Está seguro de crear el Medico?")
+    if(!comprobarInfoEspecifica(Registro)){
+        return;
+    }
+    
+    var respuesta = confirm("Está seguro de crear el Medico?")
 
-        if (respuesta) {
-            const data = {
-                "Identificacion": Identificacion,
-                "Password": Password,
-                "Nombre": Nombre,
-                "Apellido": Apellido,
-                "Telefono": Telefono,
-                "Genero": Genero,
-                "Email": Email,
-                "ID_ESPECIALIDAD": parseInt(espe[0]),
-                "Registro": Registro
-            };
-            const dataToSend = JSON.stringify(data);
-            newEntidad(dataToSend);
-        } else {
-            alert("Proceso cancelado.");
-        }
-    }, 600);
+    if (respuesta) {
+        const data = {
+            "Identificacion": Identificacion,
+            "Password": Password,
+            "Nombre": Nombre,
+            "Apellido": Apellido,
+            "Telefono": Telefono,
+            "Genero": Genero,
+            "Email": Email,
+            "ID_ESPECIALIDAD": parseInt(espe[0]),
+            "Registro": Registro
+        };
+        const dataToSend = JSON.stringify(data);
+        newEntidad(dataToSend);
+    } else {
+        alert("Proceso cancelado.");
+    }
 
 }
 
 function comprobarInfoBasica(Identificacion,Password,Nombre,Apellido,Telefono,Genero,Email){
     
-    if (Identificacion === ""){
-        alert("escriba su Identificacion")
-        return false;
-    }
-    if (getPersona(Number(Identificacion,"Médico", false))){
-        alert("Ya existe Usuario")
-        return false;
-    }
     if (Identificacion === ""){
         alert("escriba su Identificacion")
         return false;
@@ -140,43 +131,11 @@ function comprobarInfoEspecifica(Registro){
     return true
 }
 
-function getUsuarios() {
-    fetch(getUsuUrl)
-        .then(response => {
-            if (response.ok) {
-                return response.text()
-            } else {
-                console.log(response.body)
-                throw new Error(response.status)
-            }
-        })
-        .then(data => {
-            usuarios = JSON.parse(data);
-            console.log(usuarios);
-        })
-        .catch(err => {
-            console.log("Error: " + err);
-        });
+function validar() {
+    var id = document.getElementById("Identificacion").value.trim();
+    validate(getMedUrl, id, ()=>{alert( "Ya hay un Medico con ese ID")}, create)    
 }
 
-function getPersona(Identificacion,rol,RolIgual){
-    let salida = false
-
-    usuarios.forEach((usu) => {
-        if(RolIgual){
-            if(usu.Identificacion==Identificacion && rol== usu.Rol ){
-                salida = true
-            }
-        } else{
-            if(usu.Identificacion==Identificacion){
-                salida = true
-            }
-        }
-    });
-
-    console.log(salida)
-    return salida
-}
 // /función para crear un medico
 function newEntidad(data) {
     fetch(newEntUrl, {
@@ -207,5 +166,26 @@ function RespExitosa(mess) {
     alert("Medico " + mess + " exitosamente!!");
     location.reload();
 }
+
+function validate(url, id, func, funcNot) {
+
+    fetch(url + '/' + Number(id))
+        .then(response => {
+            if (response.ok) {
+                return response.text()
+            } else {
+                throw new Error(response.status)
+            }
+        })
+        .then(data => {
+            usuario = JSON.parse(data);
+            func();
+        })
+        .catch(err => {
+            funcNot()
+            console.log("Error: " + err);
+    });
+}
+
 
 document.addEventListener("DOMContentLoaded", getEspecialidades);

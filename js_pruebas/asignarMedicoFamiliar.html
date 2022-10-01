@@ -13,7 +13,7 @@
 
         <!-- datos generales de las entidades nuevas -->
         <tr>
-            <td><label>Identificacion</label></td>
+            <td><label>Identificacion paciente</label></td>
             <td><input id="Identificacion" type="text" value="1001"></td>
         </tr>
        
@@ -22,15 +22,19 @@
         <tr>
             <td><label>ID Medico asignado</label></td>
             <td><input id="Medico_ID_MEDICO" type="text"></td>
+            <td><label id="consultaMedico"></td>
         </tr>
         <tr>
             <td><label>ID Familiar asignado</label></td>
             <td><input id="Familiar_ID_FAMILIAR" type="text"></td>
-        </tr>
-    
-        
+            <td><label id="consultaFamiliar"></td>
+            </tr>
+            
+            
         <tr>
-            <td><input id="enviar" type="submit" value="Actualizar información"></tr>
+            <td><button onclick="consultar()">consultar informacion</button></td>
+            <td><button onclick="actualizar()">Actualizar información</button></td>
+        </tr>
     </table>
 
     <script src="js/asignarMedicoFamiliar.js"></script>

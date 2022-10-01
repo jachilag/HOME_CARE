@@ -301,8 +301,8 @@ def getPaciente(request, id):
 
             data = {
                 "Identificacion" : id,
-                "Medico_ID_MEDICO" : paciente.Medico_ID_MEDICO.ID_MEDICO if paciente.Medico_ID_MEDICO != None else None,
-                "Familiar_ID_FAMILIAR" : paciente.Familiar_ID_FAMILIAR.ID_FAMILIAR if paciente.Familiar_ID_FAMILIAR != None else None,
+                "Medico_ID_MEDICO" : str(paciente.Medico_ID_MEDICO.ID_PERSONA.Identificacion.ID_LOGIN) + "-" + paciente.Medico_ID_MEDICO.ID_PERSONA.Nombre + " " + paciente.Medico_ID_MEDICO.ID_PERSONA.Apellido if paciente.Medico_ID_MEDICO != None else None,
+                "Familiar_ID_FAMILIAR" : str(paciente.Familiar_ID_FAMILIAR.ID_PERSONA.Identificacion.ID_LOGIN) + "-" + paciente.Familiar_ID_FAMILIAR.ID_PERSONA.Nombre + " " + paciente.Familiar_ID_FAMILIAR.ID_PERSONA.Apellido if paciente.Familiar_ID_FAMILIAR != None else None,
                 "Nombre" : persona.Nombre,
                 "Apellido" : persona.Apellido,
                 "Genero" : persona.Genero,

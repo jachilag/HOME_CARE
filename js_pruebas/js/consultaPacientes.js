@@ -100,7 +100,7 @@ function validate() {
             .then(data => {
                 PacInd = JSON.parse(data);
                 console.log(PacInd);
-                fillPac();
+                fillData();
             })
             .catch(err => {
                 console.log("Error: " + err);
@@ -109,7 +109,7 @@ function validate() {
     }
 }
 
-function fillPac() {
+function fillData() {
     document.getElementById('ide').innerHTML = PacInd.Identificacion;
     document.getElementById('Medico_ID_MEDICO').innerHTML = PacInd.Medico_ID_MEDICO;
     document.getElementById('Familiar_ID_FAMILIAR').innerHTML = PacInd.Familiar_ID_FAMILIAR;
@@ -123,5 +123,3 @@ function fillPac() {
     document.getElementById('Latitud').innerHTML = PacInd.Latitud;
     document.getElementById('Longitud').innerHTML = PacInd.Longitud;
 }
-
-document.addEventListener("DOMContentLoaded", getPacientes);

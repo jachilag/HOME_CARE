@@ -2,9 +2,7 @@
 // const host = 'http://127.0.0.1:8000/';
 const host = 'https://home-care-db-2022-g7.herokuapp.com/';
 
-const newEntUrl = host + 'nuevoPaciente';
-const getPacUrl = host + 'getPaciente';
-const getMedUrl = host + 'getMedico';
+const newEntUrl = host + 'nuevoFamiliar';
 const getFamUrl = host + 'getFamiliar';
 let usuarios = [];
 let usuario = [];
@@ -18,23 +16,18 @@ function create() {
     var Genero = document.getElementById("Genero").value.trim();
     var Email = document.getElementById("Email").value.trim();
     
-    var Medico_ID_MEDICO = document.getElementById("Medico_ID_MEDICO").value.trim();
-    var Familiar_ID_FAMILIAR = document.getElementById("Familiar_ID_FAMILIAR").value.trim();
-    var Direccion = document.getElementById("Direccion").value;
-    var Ciudad = document.getElementById("Ciudad").value.trim();
-    var Latitud = document.getElementById("Latitud").value.trim();
-    var Longitud = document.getElementById("Longitud").value.trim();
-    var Fecha_Nacimiento = document.getElementById("Fecha_Nacimiento").value.trim();
+    var Parentesco = document.getElementById("Parentesco").value;
+    
     
     if(!comprobarInfoBasica(identificacion,Password,Nombre,Apellido,Telefono,Genero,Email)){
         return;
     }
 
-    if(!comprobarInfoEspecifica(Direccion, Ciudad, Latitud, Longitud, Fecha_Nacimiento)){
+    if(!comprobarInfoEspecifica(Parentesco)){
         return;
     }
     
-    var respuesta = confirm("Está seguro de crear el Paciente?")
+    var respuesta = confirm("Está seguro de crear el Familiar?")
     if (respuesta) {
         const data = {
             "Identificacion": identificacion,
@@ -45,13 +38,7 @@ function create() {
             "Genero": Genero,
             "Email": Email,
 
-            "Medico_ID_MEDICO" : Medico_ID_MEDICO==""?null:Medico_ID_MEDICO,
-            "Familiar_ID_FAMILIAR" : Familiar_ID_FAMILIAR==""?null:Familiar_ID_FAMILIAR,
-            "Direccion" : Direccion,
-            "Ciudad" : Ciudad,
-            "Latitud" : Latitud,
-            "Longitud" : Longitud,
-            "Fecha_Nacimiento" : Fecha_Nacimiento
+            "parentesco" : Parentesco
         };
         
         const dataToSend = JSON.stringify(data);
@@ -95,25 +82,9 @@ function comprobarInfoBasica(Identificacion,Password,Nombre,Apellido,Telefono,Ge
     return true
 }
 
-function comprobarInfoEspecifica(Direccion, Ciudad, Latitud, Longitud, Fecha_Nacimiento){
-    if (Direccion === ""){
-        alert("escriba su Direccion")
-        return false;
-    }
-    if (Ciudad === ""){
-        alert("escriba su Ciudad")
-        return false;
-    }
-    if (Latitud === ""){
-        alert("escriba su Latitud")
-        return false;
-    }
-    if (Longitud === ""){
-        alert("escriba su Longitud")
-        return false;
-    }
-    if (Fecha_Nacimiento === ""){
-        alert("escriba su Fecha de nacimiento")
+function comprobarInfoEspecifica(Parentesco){
+    if (Parentesco === ""){
+        alert("escriba su Parentesco")
         return false;
     }
     return true
@@ -121,29 +92,10 @@ function comprobarInfoEspecifica(Direccion, Ciudad, Latitud, Longitud, Fecha_Nac
 
 function validar() {
     var id = document.getElementById("Identificacion").value.trim();
-    validate(getPacUrl, id, ()=>{alert( "Ya hay un Paciente con ese ID")}, validar_medico)    
-}
-
-function validar_medico() {
-    var id = document.getElementById("Medico_ID_MEDICO").value.trim();
-    if (id == '' || id == undefined) {
-        validar_familiar()
-    } else {
-        validate(getMedUrl, id, validar_familiar, ()=>{alert("No existe Medico con ese ID")})    
-    }
-}
-
-function validar_familiar() {
-    var id = document.getElementById("Familiar_ID_FAMILIAR").value.trim();
-    if (id == '' || id == undefined) {
-        create()
-    } else {
-        validate(getFamUrl, id, create, ()=> {alert("No existe Familiar con ese ID")})    
-    }
+    validate(getFamUrl, id, ()=>{alert( "Ya hay un Familiar con ese ID")}, create)    
 }
 
 function validate(url, id, func, funcNot) {
-
     fetch(url + '/' + Number(id))
         .then(response => {
             if (response.ok) {
@@ -174,14 +126,12 @@ function newEntidad(data) {
             if (response.ok) {
                 return response.text()
             } else {
-                console.log(response.body)
                 throw new Error(response.status)
             }
         })
         .then(data => {
             console.log(data);
-            var mess = "creado";
-            RespExitosa(mess);
+            RespExitosa("creado");
         })
         .catch(err => {
             console.log("Error: " + err);
@@ -189,7 +139,7 @@ function newEntidad(data) {
 }
 
 function RespExitosa(mess) {
-    alert("Paciente " + mess + " exitosamente!!");
+    alert("Familiar " + mess + " exitosamente!!");
     location.reload();
 }
 
