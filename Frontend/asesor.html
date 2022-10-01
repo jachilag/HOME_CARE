@@ -28,12 +28,16 @@
             </div>
             <!--Formulario de consulta y botones de registro-->
             <div class="contenedor__consulta-register">
+                
                 <!--Consultar-->
-                <form action="" class="formulario__consulta">
+                <form action="" class="formulario__consulta" id="formulario__consulta" name="formulario__consulta">
                     <h3>Consultar usuario</h3>
                     <input placeholder="Identificación" type="text" id="Identificacion" name="Identificacion">
-                    <button> Consultar</button>
+                    <button type = "button" name = "consulta_boton" id ="consulta_boton" > Consultar</button>
+                     <!-- data-bs-toggle="modal"
+                    data-bs-target="#usuario"-->
                 </form>
+
                 <!--Registrar-->
                 <form action="" class="formulario__register">
                     <h2>Registrar</h2>
@@ -256,7 +260,7 @@
                                 <form class="formulario">
                                     <p>
                                         <label>Cédula</label>
-                                        <input type="text" name="identificacion" required>
+                                        <input type="text" name="identificacion" readonly >
                                     </p>
                                     <p>
                                         <label>Contraseña</label>
@@ -299,7 +303,6 @@
                         </div>
                     </div>
                 </div>
-
                 <!-- Modal footer -->
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
@@ -309,8 +312,69 @@
         </div>
     </div>
 
+    <!-- The Modal usuario -->
+    <div class="modal" id="usuario">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Informacion de Usuario</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="contenedor">
+                        <div class="wrapper animated bounceInLeft">
+
+                            <div class="usuario__informacion" id = 'usuario__informacion'>
+                                <form class="formulario">
+                                    <p>
+                                        <label>Cedula</label>
+                                        <input type="text" name="Identificacion" readonly>
+                                    </p>
+                                    <p>
+                                        <label>Nombre(s)</label>
+                                        <input type="text" name="Nombre" readonly>
+                                    </p>
+                                    <p>
+                                        <label>Apellido(s)</label>
+                                        <input type="text" name="Apellido" readonly>
+                                    </p>
+                                    <p>
+                                        <label>Teléfono</label>
+                                        <input type="email" name="Telefono" readonly>
+                                    </p>
+                                    <p>
+                                        <label>Genero:</label>
+                                        <input type="text" name="Genero" readonly>
+                                    </p>
+                                    <p>
+                                        <label>Correo electrónico</label>
+                                        <input type="text" name="Email" readonly>
+                                    </p>
+                                    <p>
+                                        <label>Rol</label>
+                                        <input type="text" name="Rol" readonly>
+                                    </p>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id ="usr_form_close">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script src="assets/js/styleasesor.js"></script>
+    <script src="assets/js/queries.js"></script>
 </body>
 
 </html>
