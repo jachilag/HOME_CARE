@@ -14,6 +14,8 @@
 </head>
 
 <body>
+    
+    
     <main>
         <div class="contenedor__todo">
             <div class="caja__trasera">
@@ -75,24 +77,24 @@
                                 <form class="formulario">
                                     <p>
                                         <label>Cedula</label>
-                                        <input type="text" name="identificacion" id="Identificacion" required>
+                                        <input id="IdentificacionMedico" type="text" value="2001">
                                     </p>
                                     <p>
                                         <label>Contraseña</label>
-                                        <input type="text" name="password" id="Password" required>
+                                        <input id="PasswordMedico" type="password" value="">
                                     </p>
                                     <p>
                                         <label>Nombre(s)</label>
-                                        <input type="text" name="Nombre" id="Nombre" required>
+                                        <input id="NombreMedico" type="text" value="pruebaTwo">
                                     </p>
                                     <p>
                                         <label>Apellido(s)</label>
-                                        <input type="text" name="Apellido" required>
+                                        <input id="ApellidoMedico" type="text" value="pruebaTwo">
                                     </p>
                                     <p>
                                         <label for="Genero">Genero:</label>
-                                        <select style="padding: 15px" class="form-control" id="Genero">
-                                            <option value="#">Seleccionar</option>
+                                        <select style="padding: 15px" class="form-control" id="GeneroMedico">
+                                            <option value="null">Seleccionar</option>
                                             <option value="Masculino">Masculino</option>
                                             <option value="Femenino">Femenino</option>
                                         </select>
@@ -100,30 +102,25 @@
                                     </p>
                                     <p>
                                         <label>Correo electrónico</label>
-                                        <input type="email" name="email" required>
+                                        <input id="EmailMedico" type="email" value="medico1@gmail.com">
                                     </p>
                                     <p>
                                         <label>Teléfono</label>
-                                        <input type="text" name="telefono" required>
+                                        <input id="TelefonoMedico" type="text" value="1112233">
                                     </p>
                                     <p>
                                         <label>Registro</label>
-                                        <input type="text" name="registro" required>
+                                        <input id="Registro" type="text" value="1001">
                                     </p>
                                     <p>
                                         <label for="Genero">Especialidad:</label>
-                                        <select style="padding: 15px" class="form-control" id="Genero">
-                                            <option value="#">Seleccionar</option>
-                                            <option value="Pediatria">Pediatria</option>
-                                            <option value="Medicogeneral">Medico general</option>
-                                            <option value="Otologia">Otología</option>
+                                        <select style="padding: 15px" name="ID_ESPECIALIDAD" id="especialidad">
+
                                         </select>
 
                                     </p>
                                     <br>
                                     <p>
-                                        <!--Colocar funcion-->
-                                        <button style="margin-left: 50%" class="boton-enviar">Enviar</button>
                                     </p>
                                 </form>
                             </div>
@@ -131,11 +128,10 @@
                     </div>
                 </div>
 
-                <!-- Modal footer -->
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" onclick="create()">Crear</button>
                 </div>
-
             </div>
         </div>
     </div>
@@ -309,7 +305,7 @@
         </div>
     </div>
 
-
+    <script src="js/registromedico.js"></script>
     <script src="assets/js/styleasesor.js"></script>
 </body>
 
