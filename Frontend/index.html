@@ -17,14 +17,13 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    
+
     <style>
     </style>
 </head>
 
-<body id="body">
-    <main id = "main">
-    <div class="contenedor_formulario" id = "contenedor_formulario" >
+<body>
+    <div class="contenedor-formulario contenedor">
         <div class="imagen-formulario">
             <h1 id="Bienvenida"> Bienvenido a HomeCare</h1>
         </div>
@@ -36,22 +35,18 @@
             <!--<div class="input">
                 <label for="domTextElement">Rol: </label>
                 <div class="btn-group">
-                    <input id = "role_input"><button id = "role_btn" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                    </button></input>
-                    <div id = "role_menu" class="dropdown-menu">
-                        <a class="dropdown-item" href="#">Medico</a>
-                        <a class="dropdown-item" href="#">Auxiliar</a>
-                        <a class="dropdown-item" href="#">Paciente</a>
-                        <a class="dropdown-item" href="#">Familiar</a>
-                        <a class="dropdown-item" href="#">Enfermero</a>
-                    </div>
-                   
+                    <select style="padding: 20px; border-radius: 5px;" id="Rol" type="text">
+                        <option value="2">Auxiliar</option>
+                        <option value="3">Paciente</option>
+                        <option value="1">Medico</option>
+                        <option value="4">Familiar</option>
+                    </select>
                 </div>
                 </div>
             </div>-->
             <div class="input">
                 <label for="domTextElement">Rol:</label>
-                <select id="datalist_id" required>
+                <select id="Rol" required>
                     <option value = "" disabled selected hidden> Seleccione un Rol </option>
                     <option value = "1"> Medico </option>
                     <option value = "2"> Auxiliar</option>
@@ -63,12 +58,12 @@
             
             <div class="input">
                 <label for="domTextElement">Identificación: </label>
-                <input placeholder="Ingresa identificación" type="number" id="usuario" name="usuario" required>
+                <input placeholder="Ingresar identificacion" id="Identificacion" type="text" value="" />
             </div>
             <div class="input">
                 <label for="domTextElement">Contraseña: </label>
                 <div class="input-group">
-                    <input  placeholder="Ingresa contraseña" type="password" id="Contrasena" name="contraseña" required>
+                    <input placeholder="Ingresar contraseña" id="Password" type="password" value="" />
 
                     <div style="margin-top: 5%" class="input-group-append">
 
@@ -79,20 +74,18 @@
                 </div>
 
             </div>
-            <br>
-            <br>
-            <br>
-            <div id = "div_button" align="center" class="paginacion">
-                <input type="button" id="ingresar" value="Ingresar"></input>
+            <br><br><br>
+            <div align="center" class="paginacion">
+                <a id="ingresar" onclick="validar()">Ingresar</a>
             </div>
         </form>
     </div>
 
     <p id="valueInput"></p>
-    
+
     <script>
         function mostrarPassword() {
-            var cambio = document.getElementById("Contraseña");
+            var cambio = document.getElementById("Password");
             if (cambio.type == "password") {
                 cambio.type = "text";
                 $('.icon').removeClass('fa fa-eye-slash').addClass('fa fa-eye');
@@ -109,9 +102,8 @@
             });
         });
     </script>
-    </main>
-
-    <script src="assets/js/login.js"></script>
+    
+    <script src="js/login.js"></script>
 </body>
 
 </html>
