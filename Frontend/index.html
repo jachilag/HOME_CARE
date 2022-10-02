@@ -24,37 +24,51 @@
 
 <body id="body">
     <main id = "main">
-    <div class="contenedor-formulario contenedor">
+    <div class="contenedor_formulario" id = "contenedor_formulario" >
         <div class="imagen-formulario">
             <h1 id="Bienvenida"> Bienvenido a HomeCare</h1>
         </div>
-        <form name="login" class="formulario">
+        <form id = "login" name="login" class="formulario" method="post">
             <div class="texto-formulario">
 
 
             </div>
-            <div class="input">
+            <!--<div class="input">
                 <label for="domTextElement">Rol: </label>
                 <div class="btn-group">
                     <input id = "role_input"><button id = "role_btn" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
                     </button></input>
                     <div id = "role_menu" class="dropdown-menu">
-                        <li class="dropdown-item" href="#">Medico</li>
-                        <li class="dropdown-item" href="#">Auxiliar</li>
-                        <li class="dropdown-item" href="#">Paciente</li>
-                        <li class="dropdown-item" href="#">Familiar</li>
-                        <li class="dropdown-item" href="#">Enfermero</li>
+                        <a class="dropdown-item" href="#">Medico</a>
+                        <a class="dropdown-item" href="#">Auxiliar</a>
+                        <a class="dropdown-item" href="#">Paciente</a>
+                        <a class="dropdown-item" href="#">Familiar</a>
+                        <a class="dropdown-item" href="#">Enfermero</a>
                     </div>
+                   
                 </div>
+                </div>
+            </div>-->
+            <div class="input">
+                <label for="domTextElement">Rol:</label>
+                <select id="datalist_id" required>
+                    <option value = "" disabled selected hidden> Seleccione un Rol </option>
+                    <option value = "1"> Medico </option>
+                    <option value = "2"> Auxiliar</option>
+                    <option value = "3"> Paciente</option>
+                    <option value = "4"> Familiar</option>
+                    <option value = "5"> Enfermero</option>
+                </select>
             </div>
+            
             <div class="input">
                 <label for="domTextElement">Identificación: </label>
-                <input placeholder="Ingresa identificación" type="text" id="usuario" name="usuario">
+                <input placeholder="Ingresa identificación" type="number" id="usuario" name="usuario" required>
             </div>
             <div class="input">
                 <label for="domTextElement">Contraseña: </label>
                 <div class="input-group">
-                    <input placeholder="Ingresa contraseña" type="password" id="Contrasena" name="contraseña">
+                    <input  placeholder="Ingresa contraseña" type="password" id="Contrasena" name="contraseña" required>
 
                     <div style="margin-top: 5%" class="input-group-append">
 
@@ -65,8 +79,10 @@
                 </div>
 
             </div>
-            <br><br><br>
-            <div align="center" class="paginacion">
+            <br>
+            <br>
+            <br>
+            <div id = "div_button" align="center" class="paginacion">
                 <input type="button" id="ingresar" value="Ingresar"></input>
             </div>
         </form>

@@ -32,8 +32,8 @@
                 <!--Consultar-->
                 <form action="" class="formulario__consulta" id="formulario__consulta" name="formulario__consulta">
                     <h3>Consultar usuario</h3>
-                    <input placeholder="Identificación" type="text" id="Identificacion" name="Identificacion">
-                    <button type = "button" name = "consulta_boton" id ="consulta_boton" data-bs-toggle="modal"
+                    <input placeholder="Identificación" type="number" id="Identificacion" name="Identificacion" required> 
+                    <button type = "button" name = "consulta_btnon" id ="consulta_btn" data-bs-toggle="modal"
                     data-bs-target="#usuario"> Consultar</button>
                      <!-- data-bs-toggle="modal"
                     data-bs-target="#usuario"-->
@@ -321,7 +321,7 @@
                 <!-- Modal Header -->
                 <div class="modal-header">
                     <h4 class="modal-title">Informacion de Usuario</h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" id = "usr_form_x_btn"></button>
                 </div>
 
                 <!-- Modal body -->
@@ -374,9 +374,9 @@
         </div>
     </div>
 
-    <script src="assets/js/styleasesor.js"></script>
-    <script src="js/registromedico.js"></script>
-    <script src="assets/js/consultas.js"></script>
+    <script src="assets/js/auxiliar_style.js"></script>
+    <script src="assets/js/auxiliar_registro.js"></script>
+    <script src="assets/js/auxiliar_consultas.js"></script>
 </body>
 
 </html>
