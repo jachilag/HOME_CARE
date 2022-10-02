@@ -5,6 +5,7 @@ urlpatterns = [
     path('home', views.home, name='home'),
     path('nuevoSignoVital', views.nuevoSignoVital, name='nuevoSignoVital'),
     path('getSignoVital/<int:id>', views.getSignoVital, name='getSignoVital'),
+    path('getSignos', views.getSignos, name='getSignos'),
     
     path('nuevoRol', views.nuevoRol, name='nuevoRol'),
     path('getRol/<int:id>', views.getRol, name='getRol'),

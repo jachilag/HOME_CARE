@@ -1068,6 +1068,31 @@ def getSignoVital(request, id):
     else:
         return HttpResponseNotAllowed(['GET'], "Método inválido")
 
+def getSignos(request):
+    if request.method == 'GET':
+        try:
+            signos = Signos_vitales.objects.all()
+            if (not signos):
+                return HttpResponseBadRequest("No existen signos vitales cargados.")
+            
+            allSignos = []
+            for sig in signos:
+                data = {
+                    "id" : sig.ID_SIGNO_VITAL,
+                    "Signo" : sig.Tipo_Signo,
+                }
+                allSignos.append(data)
+
+            resp = HttpResponse()
+            resp.headers['Content-Type'] = "text/json"
+            resp.content = json.dumps(allSignos)
+            return resp
+        except:
+            return HttpResponseServerError("Error de servidor")
+    else:
+        return HttpResponseNotAllowed(['GET'], "Método inválido")
+
+
 def nuevoRegistro_SV (request):
     if request.method == 'POST':
         try:

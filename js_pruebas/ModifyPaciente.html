@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medico</title>
+</head>
+
+<body>
+    <h1>MODIFICAR DATOS PACIENTE</h1>
+    <table>
+
+        <!-- datos generales de las entidades nuevas -->
+        <tr>
+            <td><label>Identificacion</label></td>
+            <td><label id="Identificacion"></td>
+        </tr>
+        <tr>
+            <td><label>Nombre</label></td>
+            <td><label id="Nombre"></td>
+        </tr>
+        <tr>
+            <td><label>Contraseña</label></td>
+            <td><input id="Password" type="password" value="hola123456"></td>
+        </tr>
+        <tr>
+            <td><label>Telefono</label></td>
+            <td><input id="Telefono" type="number" value="321987"></td>
+            <td><label id="tel"></td>
+        </tr>
+        <tr>
+            <td><label>Email</label></td>
+            <td><input id="Email" type="email" value="jachilag@gmail.com"></td>
+            <td><label id="ema"></td>
+        </tr>
+        <tr>
+            <td><label>Direccion</label></td>
+            <td><input id="Direccion" type="Direccion" value="tv 1 x dg 1"></td>
+            <td><label id="dir"></td>
+        </tr>
+        <tr>
+            <td><label>Ciudad</label></td>
+            <td><input id="Ciudad" type="Ciudad" value="Cali"></td>
+            <td><label id="ciu"></td>
+        </tr>
+        <tr>
+            <td><label>Latitud</label></td>
+            <td><input id="Latitud" type="Latitud" value="4.5666"></td>
+            <td><label id="lati"></td>
+        </tr>
+        <tr>
+            <td><label>Longitud</label></td>
+            <td><input id="Longitud" type="Longitud" value="-74.5666"></td>
+            <td><label id="longi"></td>
+        </tr>
+
+        <!-- datos especificos -->              
+        <tr>
+            <td><button onclick="validar()">ACTUALIZAR</button></tr>
+    </table>
+
+    <script src="js/ModifyPaciente.js"></script>
+</body>
+
+</html>
