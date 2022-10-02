@@ -13,7 +13,7 @@
 
 </head>
 
-<body>
+<body id = "body">
     <main>
         <div class="contenedor__todo">
             <div class="caja__trasera">
@@ -33,7 +33,8 @@
                 <form action="" class="formulario__consulta" id="formulario__consulta" name="formulario__consulta">
                     <h3>Consultar usuario</h3>
                     <input placeholder="Identificación" type="text" id="Identificacion" name="Identificacion">
-                    <button type = "button" name = "consulta_boton" id ="consulta_boton" > Consultar</button>
+                    <button type = "button" name = "consulta_boton" id ="consulta_boton" data-bs-toggle="modal"
+                    data-bs-target="#usuario"> Consultar</button>
                      <!-- data-bs-toggle="modal"
                     data-bs-target="#usuario"-->
                 </form>
@@ -329,7 +330,7 @@
                         <div class="wrapper animated bounceInLeft">
 
                             <div class="usuario__informacion" id = 'usuario__informacion'>
-                                <form class="formulario">
+                                <form class="formulario" id = "usuario_formulario">
                                     <p>
                                         <label>Cedula</label>
                                         <input type="text" name="Identificacion" readonly>
