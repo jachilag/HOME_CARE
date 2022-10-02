@@ -18,12 +18,13 @@
         <div class="contenedor__todo">
             <div class="caja__trasera">
                 <div class="caja_trasera-consulta">
-                    <h3>¿Quieres consultar un usuario?</h3>
+                    <h3>¿Que pacientes tengo?</h3>
                     <button id="btn__consultar">Consultar</button>
                 </div>
                 <div class="caja_trasera-register">
-                    <h3>¿Registro no encontrado?</h3>
-                    <button id="btn__registrate">Registrar</button>
+                    <h3 style="margin-left: 200px;">¿Deseas actualizar </h3>
+                    <h3 style="margin-left: 250px;"> tus datos?</h3>
+                    <button style="margin-left: 250px;" id="btn__registrate">actualizar</button>
                 </div>
             </div>
             <!--Formulario de consulta y botones de registro-->
@@ -31,35 +32,20 @@
 
                 <!--Consultar-->
                 <form action="" class="formulario__consulta" id="formulario__consulta" name="formulario__consulta">
-                    <h3>Consultar usuario</h3>
-                    <input placeholder="Identificación" type="number" id="Identificacion" name="Identificacion"
-                        required>
-                    <button type="button" name="consulta_btnon" id="consulta_btn" data-bs-toggle="modal"
-                        data-bs-target="#usuario"> Consultar</button>
-                    <button id="btn" type="button" class="btn btn-primary" data-bs-toggle="modal"
-                        data-bs-target="#Pacientes">
-                        Consultar Pacientes
-                    </button>
+                    <h1>Consultar pacientes</h1>
+                    <br>
+                    <button onclick="misPacientes()">Mis pacientes</button>
                     <!-- data-bs-toggle="modal"
                     data-bs-target="#usuario"-->
                 </form>
 
                 <!--Registrar-->
                 <form action="" class="formulario__register">
-                    <h2>Registrar</h2>
-                    <button id="btn" type="button" class="btn btn-primary" data-bs-toggle="modal"
-                        data-bs-target="#Medico">
-                        Medico
-                    </button>
+                    <h2>Actualizar</h2>
                     <br>
                     <button id="btn" type="button" class="btn btn-primary" data-bs-toggle="modal"
                         data-bs-target="#Paciente">
                         Paciente
-                    </button>
-                    <br>
-                    <button id="btn" type="button" class="btn btn-primary" data-bs-toggle="modal"
-                        data-bs-target="#Familiar">
-                        Familiar
                     </button>
                 </form>
             </div>
@@ -237,6 +223,7 @@
     <script src="assets/js/auxiliar_style.js"></script>
     <script src="assets/js/auxiliar_registro.js"></script>
     <script src="assets/js/auxiliar_consultas.js"></script>
+    <script src="js/LogMedico.js"></script>
 </body>
 
 </html>

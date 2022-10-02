@@ -6,7 +6,7 @@ function getInfo() {
     const login_user = document.getElementById('usuario').value;
     const login_pass = document.getElementById('Contrasena').value;
     const login_rol = document.getElementById('datalist_id').value;
-    
+
     const user_info = {
         Identificacion: login_user,
         Password: login_pass,
@@ -17,14 +17,14 @@ function getInfo() {
     login(dataLogin);
 }
 // --------------------- Realiza una promesa con Fetch para peticion POST
-function login(data){
+function login(data) {
     fetch(login_url, {
         method: "POST",
-        headers: {"Content-Type": "text/json"},
+        headers: { "Content-Type": "text/json" },
         body: data
     })
         .then(response => {
-            if(response.ok ){
+            if (response.ok) {
                 return response.text()
             } else {
                 throw new Error(response.status)
@@ -34,26 +34,26 @@ function login(data){
             console.log(data.Identificacion)
             handlerSuccess();
         })
-        .catch (error => {
-            console.log("Error"+ error);
+        .catch(error => {
+            console.log("Error" + error);
             handlerError();
         });
-    }
-login_btn.addEventListener('click', () => {getInfo()});
+}
+login_btn.addEventListener('click', () => { getInfo() });
 // -----------------------------------------Alerta Acceso Exitoso.
-function handlerSuccess(){
-        const respuesta = document.createElement('h1');
-        document.getElementById('login').remove();
-        respuesta.innerHTML = "Acceso Exitoso";
-        const div_main = document.getElementById('contenedor_formulario');
-        div_main.appendChild(respuesta);
+function handlerSuccess() {
+    const respuesta = document.createElement('h1');
+    document.getElementById('login').remove();
+    respuesta.innerHTML = "Acceso Exitoso";
+    const div_main = document.getElementById('contenedor_formulario');
+    div_main.appendChild(respuesta);
 }
 //------------------------------Muestra alerta de datos invalidos.
-function handlerError(){ 
+function handlerError() {
     const form = document.getElementById('login');
     const respuesta = document.createElement('p');
     // Estilo de la alerta
-    if (document.getElementById('acceso_fallido') == null ){
+    if (document.getElementById('acceso_fallido') == null) {
         respuesta.setAttribute('id', 'acceso_fallido');
         respuesta.innerHTML = "Acceso fallido: Usuario, Contraseña o Rol Invalido";
         respuesta.style.marginLeft = "25px";
@@ -63,14 +63,16 @@ function handlerError(){
         respuesta.style.borderColor = "red";
         respuesta.style.borderStyle = 'solid';
         respuesta.style.borderRadius = "20px";
-        const btn = document.getElementById('div_button');
-        form.insertBefore(respuesta, btn);} 
-        else{
-            setTimeout(()=>{
+        const btn = document.getElementById('ingresar');
+        form.insertBefore(respuesta, btn);
+    }
+    else {
+        setTimeout(() => {
             document.getElementById('acceso_fallido').style.borderColor = 'red';
-            document.getElementById('acceso_fallido').style.borderStyle = 'solid';}
-            ,100);
-            document.getElementById('acceso_fallido').style.borderStyle = 'hidden';
+            document.getElementById('acceso_fallido').style.borderStyle = 'solid';
         }
+            , 100);
+        document.getElementById('acceso_fallido').style.borderStyle = 'hidden';
+    }
 }
 
