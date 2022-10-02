@@ -22,7 +22,8 @@
     </style>
 </head>
 
-<body>
+<body id="body">
+    <main id = "main">
     <div class="contenedor-formulario contenedor">
         <div class="imagen-formulario">
             <h1 id="Bienvenida"> Bienvenido a HomeCare</h1>
@@ -35,14 +36,14 @@
             <div class="input">
                 <label for="domTextElement">Rol: </label>
                 <div class="btn-group">
-                    <input><button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                    <input id = "role_input"><button id = "role_btn" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
                     </button></input>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#">Paciente</a>
-                        <a class="dropdown-item" href="#">Familiar</a>
-                        <a class="dropdown-item" href="#">Médico</a>
-                        <a class="dropdown-item" href="#">Enfermero</a>
-                        <a class="dropdown-item" href="#">Auxiliar</a>
+                    <div id = "role_menu" class="dropdown-menu">
+                        <li class="dropdown-item" href="#">Medico</li>
+                        <li class="dropdown-item" href="#">Auxiliar</li>
+                        <li class="dropdown-item" href="#">Paciente</li>
+                        <li class="dropdown-item" href="#">Familiar</li>
+                        <li class="dropdown-item" href="#">Enfermero</li>
                     </div>
                 </div>
             </div>
@@ -53,7 +54,7 @@
             <div class="input">
                 <label for="domTextElement">Contraseña: </label>
                 <div class="input-group">
-                    <input placeholder="Ingresa contraseña" type="password" id="Contraseña" name="contraseña">
+                    <input placeholder="Ingresa contraseña" type="password" id="Contrasena" name="contraseña">
 
                     <div style="margin-top: 5%" class="input-group-append">
 
@@ -66,8 +67,7 @@
             </div>
             <br><br><br>
             <div align="center" class="paginacion">
-                <a id="ingresar"onclick="getValueInput()"
-                    href="https://google.com">Ingresar</a>
+                <input type="button" id="ingresar" value="Ingresar"></input>
             </div>
         </form>
     </div>
@@ -93,6 +93,8 @@
             });
         });
     </script>
+    </main>
+
     <script src="assets/js/login.js"></script>
 </body>
 
