@@ -1,7 +1,6 @@
 const login_url = 'https://home-care-db-2022-g7.herokuapp.com/login';
 const rol_url = 'https://home-care-db-2022-g7.herokuapp.com/getRol/';
 const login_btn = document.getElementById('ingresar');
-
 // ------------------------Captura la informacion del formulario ----------
 function getInfo() {
     const login_user = document.getElementById('usuario').value;
@@ -17,7 +16,6 @@ function getInfo() {
     const dataLogin = JSON.stringify(user_info);
     login(dataLogin);
 }
-
 // --------------------- Realiza una promesa con Fetch para peticion POST
 function login(data){
     fetch(login_url, {
@@ -42,23 +40,15 @@ function login(data){
         });
     }
 login_btn.addEventListener('click', () => {getInfo()});
-
-
 // -----------------------------------------Alerta Acceso Exitoso.
-
 function handlerSuccess(){
-
-
-        
         const respuesta = document.createElement('h1');
         document.getElementById('login').remove();
         respuesta.innerHTML = "Acceso Exitoso";
         const div_main = document.getElementById('contenedor_formulario');
         div_main.appendChild(respuesta);
 }
-
 //------------------------------Muestra alerta de datos invalidos.
-
 function handlerError(){ 
     const form = document.getElementById('login');
     const respuesta = document.createElement('p');
