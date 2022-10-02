@@ -8,7 +8,7 @@ const getPacUrl = host + 'getPaciente';
 const getMedUrl = host + 'getMedico';
 const getFamUrl = host + 'getFamiliar';
 let usuario = [];
-let especialidad = [];
+let signo = [];
 let usuarios = [];
 
 
@@ -22,21 +22,21 @@ function getEspecialidades() {
             }
         })
         .then(data => {
-            especialidad = JSON.parse(data);
-            console.log(especialidad);
-            pushEspecialidad();
+            signo = JSON.parse(data);
+            console.log(signo);
+            pushRoles();
         })
         .catch(err => {
             console.log("Error: " + err);
         });
 }
 
-function pushEspecialidad() {
+function pushRoles() {
     const select = [];
-    console.log(especialidad.length);
-    if (especialidad.length > 0) {
+    console.log(signo.length);
+    if (signo.length > 0) {
 
-        especialidad.forEach((esp) => {
+        signo.forEach((esp) => {
             const option = document.createElement("option");
             option.innerHTML = `<option value='${esp.id}' >${esp.id}- ${esp.Especialidad}</option>`;
             select.push(option);
@@ -133,7 +133,7 @@ function comprobarInfoEspecifica(Registro){
 
 function validar() {
     var id = document.getElementById("Identificacion").value.trim();
-    validate(getMedUrl, id, ()=>{alert( "Ya hay un Medico con ese ID")}, create)    
+    solicitar(getMedUrl, id, ()=>{alert( "Ya hay un Medico con ese ID")}, create)    
 }
 
 // /función para crear un medico
@@ -167,7 +167,7 @@ function RespExitosa(mess) {
     location.reload();
 }
 
-function validate(url, id, func, funcNot) {
+function solicitar(url, id, func, funcNot) {
 
     fetch(url + '/' + Number(id))
         .then(response => {

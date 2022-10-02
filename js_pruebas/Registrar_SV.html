@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar Signo Vital</title>
+</head>
+
+<body>
+    <h1>BIENVENIDO USUARIO</h1>
+    <table>
+
+        <!-- datos generales de las entidades nuevas -->
+        <tr>
+            <td><label>Identificacion</label></td>
+            <td><label id="Identificacion"></td>
+        </tr>
+        <tr>
+            <td><label>Nombre</label></td>
+            <td><label id="Nombre"></td>
+        </tr>
+        <tr>
+            <td><label>Signo Vital</label></td>
+            <td><select name="SignoVital" id="SignoVital">
+                <!-- <option value="1"> la especialidad</option> -->
+                </select></td>
+        </tr>
+        <tr>
+            <td><label>Medida</label></td>
+            <td><input id="Medida" type="number" value="50.5"></td>
+        </tr>
+        <tr>
+            <td><button onclick="create()">Registrar Signo Vital</button>
+        </tr>
+    </table>
+
+    <script src="js/Registrar_SV.js"></script>
+</body>
+
+</html>
