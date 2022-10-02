@@ -32,7 +32,7 @@ function pushDatosInicio() {
 
 function misPacientes() {
     // sessionStorage.setItem('userID', userId)
-    window.location.href = './MisPacientes.html?id=' + userId;
+    window.location.href = './mispacientes.html?id=' + userId;
 }
 
 function misDatos() {
