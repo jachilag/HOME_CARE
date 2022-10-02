@@ -27,7 +27,7 @@ html {
 
 body {
     font-family: var(--fuente);
-    background-image: url(../img/background.png);
+    background-image: url(../img/login.png);
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;

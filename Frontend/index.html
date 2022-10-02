@@ -24,10 +24,12 @@
 
 <body>
     <div class="contenedor-formulario contenedor">
+
         <div class="imagen-formulario">
-            <h1 id="Bienvenida"> Bienvenido a HomeCare</h1>
+            <h1 style="margin-left: 500px;"  id="Bienvenida"> Bienvenido a HomeCare</h1>
         </div>
-        <form id = "login" name="login" class="formulario" method="post">
+
+        <form id="login" name="login" class="formulario" method="post">
             <div class="texto-formulario">
 
 
@@ -44,18 +46,20 @@
                 </div>
                 </div>
             </div>-->
+            <br>
+            <br><br><br><br>
             <div class="input">
                 <label for="domTextElement">Rol:</label>
                 <select id="Rol" required>
-                    <option value = "" disabled selected hidden> Seleccione un Rol </option>
-                    <option value = "1"> Medico </option>
-                    <option value = "2"> Auxiliar</option>
-                    <option value = "3"> Paciente</option>
-                    <option value = "4"> Familiar</option>
-                    <option value = "5"> Enfermero</option>
+                    <option value="" disabled selected hidden> Seleccione un Rol </option>
+                    <option value="1"> Medico </option>
+                    <option value="2"> Auxiliar</option>
+                    <option value="3"> Paciente</option>
+                    <option value="4"> Familiar</option>
+                    <option value="5"> Enfermero</option>
                 </select>
             </div>
-            
+
             <div class="input">
                 <label for="domTextElement">Identificación: </label>
                 <input placeholder="Ingresar identificacion" id="Identificacion" type="text" value="" />
@@ -102,7 +106,7 @@
             });
         });
     </script>
-    
+
     <script src="js/login.js"></script>
 </body>
 
