@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Medico</title>
+    <title>Mis pacientes</title>
 </head>
 
 <body>
@@ -18,16 +18,27 @@
             <td><label id="Identificacion"></td>
         </tr>
         <tr>
-            <td><label>Nombre</label></td>
-            <td><label id="Nombre"></td>
+            <td><label>Medico</label></td>
+            <td><label id="Medico"></td>
         </tr>
 
-        <tr>
-            <td><button onclick="misDatos()">Modificar mis datos</button>
-        </tr>
+        <table id="tableall">
+            <tr>
+                <th>Identificación</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Genero</th>
+                <th>Telefono</th>
+                <th>Fecha_Nacimiento</th>
+            </tr>
+            <div id="datos"></div>
+        </table>
+        
+
+     
     </table>
 
-    <script src="js/LogFamiliar.js"></script>
+    <script src="js/MisPacientes.js"></script>
 </body>
 
 </html>

@@ -3,7 +3,7 @@ const host = 'https://home-care-db-2022-g7.herokuapp.com/';
 
 const getPacUrl = host + 'getPacientes';
 const getPacIndUrl = host + 'getPaciente';
-let Pac = [];
+let MisPacientes = [];
 PacInd = [];
 
 
@@ -17,8 +17,8 @@ function getPacientes() {
             }
         })
         .then(data => {
-            Pac = JSON.parse(data);
-            console.log(Pac);
+            MisPacientes = JSON.parse(data);
+            console.log(MisPacientes);
             pullPac();
         })
         .catch(err => {
@@ -28,11 +28,11 @@ function getPacientes() {
 
 function pullPac() {
     const table = [];
-    console.log(Pac.length);
-    if (Pac.length > 0) {
+    console.log(MisPacientes.length);
+    if (MisPacientes.length > 0) {
         // document.getElementById("notFound").remove();
 
-        Pac.forEach((pac) => {
+        MisPacientes.forEach((pac) => {
             const tr = document.createElement("tr");
             // tr.innerHTML = `<tr><td>${pac.Identificacion}</td><td>${pac.Medico_ID_MEDICO}</td><td><i class="bi bi-pencil" onclick='showModal(${esp.id}, "${esp.Especialidad}")'></i></td><td><i class="bi bi-trash3" onclick='showModalEli(${esp.id}, "${esp.Especialidad}")'></i></td></tr>`;
             tr.innerHTML = `<tr><td>${pac.Identificacion}</td><td>${pac.Nombre}</td><td>${pac.Apellido}</td><td>${pac.Telefono}</td><td>${pac.Direccion}</td></tr>`;
@@ -123,3 +123,5 @@ function fillData() {
     document.getElementById('Latitud').innerHTML = PacInd.Latitud;
     document.getElementById('Longitud').innerHTML = PacInd.Longitud;
 }
+
+document.addEventListener("DOMContentLoaded", getPacientes);
