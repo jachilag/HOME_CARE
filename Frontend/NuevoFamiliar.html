@@ -1,0 +1,87 @@
+    <!DOCTYPE html>
+    <html>
+
+    <head>
+        <title> Registro Medico </title>
+        <link rel="stylesheet" href="assets/css/estilomodal.css">
+    </head>
+
+    <body>
+
+        <div class="contenedor">
+            <div class="wrapper animated bounceInLeft">
+                <div class="contacto">
+                    <form class="formulario">
+                        <p>
+                            <label>Cedula</label>
+                            <input id="Identificacion" type="text" value="2001">
+                        </p>
+                        <p>
+                            <label>Contraseña</label>
+                            <input id="Password" type="password" value="">
+                        </p>
+                        <p>
+                            <label>Nombre(s)</label>
+                            <input id="Nombre" type="text" value="pruebaTwo">
+                        </p>
+                        <p>
+                            <label>Apellido(s)</label>
+                            <input id="Apellido" type="text" value="pruebaTwo">
+                        </p>
+                        <p>
+                            <label for="Genero">Genero:</label>
+                            <select style="padding: 15px" class="form-control" id="Genero">
+                                <option value="null">Seleccionar</option>
+                                <option value="Masculino">Masculino</option>
+                                <option value="Femenino">Femenino</option>
+                            </select>
+
+                        </p>
+                        <p>
+                            <label>Correo electrónico</label>
+                            <input id="Email" type="email" value="medico1@gmail.com">
+                        </p>
+                        <p>
+                            <label>Teléfono</label>
+                            <input id="Telefono" type="text" value="1112233">
+                        </p>
+                        <p>
+                            <label>Medico</label>
+                            <input id="Medico_ID_MEDICO" type="text" value="">
+                        </p>
+                        <p>
+                            <label>Familiar</label>
+                            <input id="Familiar_ID_FAMILIAR" type="text" value="">
+                        </p>
+                        <p>
+                            <label>Dirección</label>
+                            <input id="Direccion" type="text" value="">
+                        </p>
+                        <p>
+                            <label>Ciudad</label>
+                            <input id="Ciudad" type="text" value="">
+                        </p>
+                        <p>
+                            <label>Latitud</label>
+                            <input id="Latitud" type="text" value="">
+                        </p>
+                        <p>
+                            <label>Longitud</label>
+                            <input id="Longitud" type="text" value="">
+                        </p>
+                        <p>
+                            <label>Fecha_Nacimiento</label>
+                            <input id="Fecha_Nacimiento" type="date" value="">
+                        </p>
+                        <p>
+                            <button id="btn" type="button" class="btn btn-primary" onclick="validar()">Crear</button>
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <script src="js/NuevoPaciente.js"></script>
+    </body>
+
+    </html>
