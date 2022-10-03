@@ -31,8 +31,8 @@ function pushDatosInicio() {
 }
 
 function misPacientes() {
-    // sessionStorage.setItem('userID', userId)
-    window.location.href = './mispacientes.html?id=' + userId;
+    // sessionStorage.setItem('userID', userId)}
+    window.location.href = 'consultas/mispacientes.html?id=' + userId;
 }
 
 function misDatos() {
