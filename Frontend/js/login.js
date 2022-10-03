@@ -57,7 +57,7 @@ function handleSuccess() {
             window.location.href = './auxiliar.html?id=' + data.Identificacion;
           break;
         case 3:
-            window.location.href = 'consulta/paciente.html?id=' + data.Identificacion;
+            window.location.href = 'consultas/paciente.html?id=' + data.Identificacion;
           break;
         case 4:
             window.location.href = 'consultas/actualizarfamiliar.html?id=' + data.Identificacion;
