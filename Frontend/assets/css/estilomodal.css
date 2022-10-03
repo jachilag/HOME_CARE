@@ -8,6 +8,92 @@
   font-family: "Poppins";
 }
 
+#btnactualizar {
+  background: #050C42; /* Eliminar color de fondo */
+  border: 2px solid #0099CC; /* Ancho de borde, estilo de línea y color */
+  border-radius: 70px; /* Esquinas redondeadas */
+  text-decoration: none;
+  text-transform: uppercase; /* Mayúsculas */
+  border: none;
+  color: white;
+  padding: 16px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 40px 80px;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
+#btnactualizar:hover{
+  background:#0099CC;
+}
+
+#btn__consultar {
+  background: #0099CC; /* Eliminar color de fondo */
+  border: 2px solid #0099CC; /* Ancho de borde, estilo de línea y color */
+  border-radius: 70px; /* Esquinas redondeadas */
+  text-decoration: none;
+  text-transform: uppercase; /* Mayúsculas */
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 40px 80px;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
+#btn__consultar:hover{
+  background:#003141;
+}
+
+#btn__registrate {
+  background: #0099CC; /* Eliminar color de fondo */
+  border: 2px solid #0099CC; /* Ancho de borde, estilo de línea y color */
+  border-radius: 70px; /* Esquinas redondeadas */
+  text-decoration: none;
+  text-transform: uppercase; /* Mayúsculas */
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 40px 80px;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
+#btn__registrate:hover{
+  background:#003141;
+}
+
+#btnpacientes {
+  background: #050C42; /* Eliminar color de fondo */
+  border: 2px solid #0099CC; /* Ancho de borde, estilo de línea y color */
+  border-radius: 70px; /* Esquinas redondeadas */
+  text-decoration: none;
+  text-transform: uppercase; /* Mayúsculas */
+  border: none;
+  color: white;
+  padding: 16px 92px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 20px 20px;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
+#btnpacientes:hover{
+  background:#0099CC;
+}
+
 #btn{
   background: #050C42;
   font-size: 20px;
