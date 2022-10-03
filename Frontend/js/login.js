@@ -60,7 +60,7 @@ function handleSuccess() {
             window.location.href = './LogPaciente.html?id=' + data.Identificacion;
           break;
         case 4:
-            window.location.href = './LogFamiliar.html?id=' + data.Identificacion;
+            window.location.href = 'consultas/actualizarfamiliar.html?id=' + data.Identificacion;
           break;
         default:
             location.reload();

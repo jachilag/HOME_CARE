@@ -51,7 +51,9 @@
             </li><!-- End Components Nav -->
             <!--Tablas-->
             <li class="nav-item">
-                <img style="margin: 0 50px;" width="40%" src="https://www.pngkit.com/png/full/115-1150342_user-avatar-icon-iconos-de-mujeres-a-color.png" alt="">
+                <img style="margin: 0 50px;" width="40%"
+                    src="https://www.pngkit.com/png/full/115-1150342_user-avatar-icon-iconos-de-mujeres-a-color.png"
+                    alt="">
                 <table align="center">
                     <thead>
                         <th>Hola <label id="Medico"></label></th>
@@ -59,23 +61,11 @@
                     <tr>
                         <td><label> Tu Identificacion</label></td>
                         <td><label id="Identificacion"></td>
-                           
+
                     </tr>
                 </table>
-                <br>    
-                <a class="nav-link " data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
-                    <i class="bi bi-layout-text-window-reverse"></i><span>Consultas</span><i
-                        class="bi bi-chevron-down ms-auto"></i>
-                </a>
-                <ul id="tables-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
-                    
-                    <li>
-                        <a  class="active">
-                            <i class="bi bi-circle"></i><span>Mis pacientes</span>
-                        </a>
-                    </li>
-                    
-                </ul>
+                <br>
+
             </li><!-- End Tables Nav -->
 
         </ul>
@@ -85,7 +75,7 @@
     <main id="main" class="main">
 
         <div class="pagetitle">
-            <h1>Pacientes</h1>
+            <h1>Mis datos</h1>
         </div><!-- End Page Title -->
 
         <section class="section">
@@ -97,28 +87,31 @@
                             <!-- Default Table -->
                             <table id="tableall" class="table">
                                 <thead>
-                                    
+
                                     <tr>
-                                        <th scope="col">Identificación</th>
-                                        <th scope="col">Nombre</th>
-                                        <th scope="col">Apellido</th>
-                                        <th scope="col">Genero</th>
+                                        <th scope="col">Contraseña</th>
                                         <th scope="col">Telefono</th>
-                                        <th scope="col">Fecha_Nacimiento</th>
+                                        <th scope="col">Email</th>
                                     </tr>
                                 </thead>
-                                
+
                                 <tbody>
-                                    
+                                    <tr>
+                                        <th><input id="Password" type="password" value="hola123456"></th>
+                                        <th><input id="Telefono" type="number" value="321987"></th>
+                                        <th><input id="Email" type="email" value="medicoPrueba@gmail.com"></th>
+                                    </tr>
                                 </tbody>
+
                             </table>
+                            <button onclick="validar()">ACTUALIZAR</button>
                             <!-- End Default Table Example -->
                         </div>
                     </div>
                     <!-- End small tables -->
 
                 </div>
-                
+
             </div>
 
             </div>
@@ -126,7 +119,7 @@
         </section>
 
     </main><!-- End #main -->
-    
+
     <!-- ======= Footer ======= -->
 
 
@@ -145,7 +138,7 @@
 
     <!-- Template Main JS File -->
     <script src="assets/js/main.js"></script>
-    <script src="assets/js/MisPacientes.js"></script>
+    <script src="assets/js/ModifyMedico.js"></script>
 </body>
 
 </html>

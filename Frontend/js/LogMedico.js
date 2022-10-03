@@ -37,7 +37,7 @@ function misPacientes() {
 
 function misDatos() {
     // sessionStorage.setItem('userID', userId)
-    window.location.href = './ModifyMedico.html?id=' + userId;
+    window.location.href = 'consultas/actualizarmedico.html?id=' + userId;
 }
 
 document.addEventListener("DOMContentLoaded", getDatosInicio);
