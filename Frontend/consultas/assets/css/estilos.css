@@ -1,0 +1,24 @@
+*{
+   font-family:"Poppins";
+}
+#btnpacientes {
+    background: #050C42; /* Eliminar color de fondo */
+    border: 2px solid #0099CC; /* Ancho de borde, estilo de línea y color */
+    border-radius: 70px; /* Esquinas redondeadas */
+    text-decoration: none;
+    text-transform: uppercase; /* Mayúsculas */
+    border: none;
+    color: white;
+    padding: 12px 50px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    margin: 10px 10px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+  }
+  #btnpacientes:hover{
+    background:#0099CC;
+  }
