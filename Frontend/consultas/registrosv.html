@@ -73,7 +73,7 @@
                 <ul id="tables-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
                     
                     <li>
-                        <a onclick="misDatos()" class="active">
+                        <a onclick="misDatos()" >
                             <i class="bi bi-circle"></i><span>actualizar datos</span>
                         </a>
                     </li>
@@ -86,7 +86,7 @@
                 <ul id="tables-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
                     
                     <li>
-                        <a onclick="Registrar_SV()" >
+                        <a onclick="Registrar_SV()" class="active">
                             <i class="bi bi-circle"></i><span>Registrar_ S.V</span>
                         </a>
                     </li>
@@ -116,34 +116,23 @@
                                 <thead>
 
                                     <tr>
-                                        <th scope="col">Contraseña</th>
-                                        <th scope="col">Telefono</th>
-                                        <th scope="col">Email</th>
+                                        <th scope="col">Signo Vital</th>
+                                        <th scope="col">Medida</th>
                                     </tr>
                                 </thead>
 
                                 <tbody>
                                     <tr>
-                                        <th><input id="Password" type="password" value="hola123456"></th>
-                                        <th><input id="Telefono" type="number" value="321987"></th>
-                                        <th><input id="Email" type="email" value="medicoPrueba@gmail.com"></th>
-                                    </tr>
-                                    <tr>
-                                        <th scope="col">Dirección</th>
-                                        <th scope="col">Ciudad</th>
-                                        <th scope="col">Latitud</th>
-                                        <th scope="col">longitud</th>
-                                    </tr>
-                                    <tr>
-                                        <th><input id="Direccion" type="text" value=""></th>
-                                        <th><input id="Ciudad" type="Ciudad" value=""></th>
-                                        <th><input id="Latitud" type="Latitud" value=""></th>
-                                        <th><input id="Longitud" type="Longitud" value=""></th>
+                                        <th><select name="SignoVital" id="SignoVital">
+                                            <!-- <option value="1"> la especialidad</option> -->
+                                            </select></th>
+                                        <th><input id="Medida" type="number" value="50.5"></th>
+                                        
                                     </tr>
                                 </tbody>
 
                             </table>
-                            <button onclick="validar()">ACTUALIZAR</button>
+                            <button onclick="create()">Registrar Signo Vital</button>
                             <!-- End Default Table Example -->
                         </div>
                     </div>
@@ -177,7 +166,7 @@
 
     <!-- Template Main JS File -->
     <script src="assets/js/main.js"></script>
-    <script src="assets/js/ModifyPaciente.js"></script>
+    <script src="assets/js/Registrar_SV.js"></script>
 </body>
 
 </html>

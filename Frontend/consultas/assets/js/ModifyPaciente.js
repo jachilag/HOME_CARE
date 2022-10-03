@@ -46,6 +46,14 @@ function getDatosPaciente() {
     });
 }
 
+function misDatos(){
+    // sessionStorage.setItem('userID', userId)
+    window.location.href = 'paciente.html?id=' + userId;
+}
+
+function Registrar_SV(){
+    window.location.href = 'registrosv.html?id=' + userId;
+}
 function pushDatosInicio() {
     document.getElementById("Identificacion").innerHTML = usuario.Identificacion;
     document.getElementById("Nombre").innerHTML = usuario.Nombre;
